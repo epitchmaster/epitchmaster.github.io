@@ -1,20 +1,19 @@
 <!DOCTYPE html>
-<!-- ไฟล์นี้สร้างอัตโนมัติด้วย /workspace/build.py จาก src/layout.html + src/pages/index.html — อย่าแก้ไฟล์นี้โดยตรง -->
+<!-- ไฟล์นี้สร้างอัตโนมัติด้วย /workspace/build.py จาก src/layout.html + src/pages/players.html — อย่าแก้ไฟล์นี้โดยตรง -->
 <html lang="th">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>ePitch Master สนามแห่งเซียน — คู่มือ eFootball™ ภาษาไทย</title>
-<meta name="description" content="คู่มือ eFootball ภาษาไทย: ปุ่ม PS5 · Xbox · PC · มือถือ, ผลบอลสด, แผน &amp; แท็กติก, สกิลเลี้ยงบอล, พัฒนานักเตะ และข่าว">
+<title>พัฒนานักเตะ (Progression) — ePitch Master</title>
+<meta name="description" content="หลักการพัฒนานักเตะ eFootball (Progression Points) และการเลือกนักเตะให้คุ้มค่า">
 <meta name="theme-color" content="#050b1f">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚽</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700;800&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css?v=f08d4e9c">
-<script>/* ลิงก์เก่าแบบ #anchor ของเว็บหน้าเดียว → หน้าใหม่ */(function(){var m={"#console":"ps5.html","#btnGlossary":"ps5.html#glossary","#mobile":"mobile.html","#remote":"mobile.html#remote","#techniques":"ps5.html#techniques","#tactics":"tactics.html","#development":"players.html","#news":"news.html","#live":"scores.html","#overview":"about.html","#sources":"about.html#sources","#report":"index.html?report"};var h=location.hash,t=m[h];if(!t&&/platform=mobile/.test(location.search))t="mobile.html";if(t)location.replace(t);})();</script>
 </head>
-<body data-page="index">
+<body data-page="players">
 <a class="skip" href="#main">ข้ามไปเนื้อหา</a>
 <div class="scroll-progress" id="scrollProgress"></div>
 
@@ -26,7 +25,7 @@
       </span>
       <span class="brand-text"><span class="bt1">ePitch <b>Master</b></span><small>สนามแห่งเซียน</small></span>
     </a>
-    <span class="nav-cur" aria-hidden="true">🏟️ หน้าแรก</span>
+    <span class="nav-cur" aria-hidden="true">🧬 พัฒนานักเตะ</span>
     <button class="burger" id="burger" type="button" aria-label="เปิดเมนู" aria-expanded="false" aria-controls="navMenu"><span></span><span></span><span></span><em>เมนู</em></button>
   </div>
 </header>
@@ -42,91 +41,42 @@
   <div class="menu-group"><p class="menu-gh">เล่นให้เก่ง</p>
     <a class="m-item" href="tactics.html"><span class="m-ic" aria-hidden="true">🧠</span><span class="m-tx"><b>แผน &amp; แท็กติก</b><small>19 แผน · Fluid Formation · คำสั่ง</small></span></a>
     <a class="m-item" href="skills.html"><span class="m-ic" aria-hidden="true">🌀</span><span class="m-tx"><b>สกิลเลี้ยงบอล</b><small>ท่าหลอก · รับบอล · ยิง · ส่ง</small></span></a>
-    <a class="m-item" href="players.html"><span class="m-ic" aria-hidden="true">🧬</span><span class="m-tx"><b>พัฒนานักเตะ</b><small>Progression · ความคุ้มค่า</small></span></a>
+    <a class="m-item is-current" href="players.html" aria-current="page"><span class="m-ic" aria-hidden="true">🧬</span><span class="m-tx"><b>พัฒนานักเตะ</b><small>Progression · ความคุ้มค่า</small></span></a>
   </div>
   <div class="menu-group"><p class="menu-gh">ติดตาม</p>
     <a class="m-item m-live" href="scores.html"><span class="m-ic" aria-hidden="true">🔴</span><span class="m-tx"><b>ผลบอลสด</b><small>โปรแกรม · ผลสด · ผู้ทำประตู</small></span><i class="nav-live-dot" aria-hidden="true"></i></a>
     <a class="m-item" href="news.html"><span class="m-ic" aria-hidden="true">📰</span><span class="m-tx"><b>ข่าว</b><small>อีเวนต์ · อัปเดต · เมตา</small></span></a>
   </div>
   <div class="menu-group"><p class="menu-gh">อื่น ๆ</p>
-    <a class="m-item is-current" href="index.html" aria-current="page"><span class="m-ic" aria-hidden="true">🏟️</span><span class="m-tx"><b>หน้าแรก</b><small>เลือกหัวข้อทั้งหมด</small></span></a>
+    <a class="m-item" href="index.html"><span class="m-ic" aria-hidden="true">🏟️</span><span class="m-tx"><b>หน้าแรก</b><small>เลือกหัวข้อทั้งหมด</small></span></a>
     <a class="m-item" href="about.html"><span class="m-ic" aria-hidden="true">ℹ️</span><span class="m-tx"><b>เกี่ยวกับเกม</b><small>แพลตฟอร์ม · Cross-play · โหมด · แหล่งข้อมูล</small></span></a>
   </div>
 </nav>
 
 <main id="main">
-<section class="hero home" id="home">
-  <div class="stadium" aria-hidden="true">
-    <div class="sky"></div>
-    <div class="stars"></div>
-    <div class="beam b1"></div><div class="beam b2"></div><div class="beam b3"></div><div class="beam b4"></div>
-    <svg class="towers" viewBox="0 0 1200 400" preserveAspectRatio="none">
-      <g class="tower" transform="translate(110,40)"><rect x="-4" y="40" width="8" height="300" fill="#0b1a44"/><rect x="-46" y="0" width="92" height="44" rx="6" fill="#0d1f52" stroke="#2c4fa8"/><g fill="#fffbd1">
-        <circle cx="-30" cy="12" r="6"/><circle cx="-10" cy="12" r="6"/><circle cx="10" cy="12" r="6"/><circle cx="30" cy="12" r="6"/><circle cx="-30" cy="31" r="6"/><circle cx="-10" cy="31" r="6"/><circle cx="10" cy="31" r="6"/><circle cx="30" cy="31" r="6"/></g></g>
-      <g class="tower" transform="translate(1090,40)"><rect x="-4" y="40" width="8" height="300" fill="#0b1a44"/><rect x="-46" y="0" width="92" height="44" rx="6" fill="#0d1f52" stroke="#2c4fa8"/><g fill="#fffbd1">
-        <circle cx="-30" cy="12" r="6"/><circle cx="-10" cy="12" r="6"/><circle cx="10" cy="12" r="6"/><circle cx="30" cy="12" r="6"/><circle cx="-30" cy="31" r="6"/><circle cx="-10" cy="31" r="6"/><circle cx="10" cy="31" r="6"/><circle cx="30" cy="31" r="6"/></g></g>
-    </svg>
-    <div class="crowd"></div>
-    <div class="pitch">
-      <svg viewBox="0 0 1000 400" preserveAspectRatio="none">
-        <g fill="none" stroke="rgba(255,255,255,.55)" stroke-width="3">
-          <rect x="40" y="20" width="920" height="360"/>
-          <line x1="500" y1="20" x2="500" y2="380"/>
-          <ellipse cx="500" cy="200" rx="90" ry="70"/>
-          <rect x="40" y="110" width="120" height="180"/><rect x="840" y="110" width="120" height="180"/>
-          <rect x="40" y="160" width="45" height="80"/><rect x="915" y="160" width="45" height="80"/>
-        </g>
-        <circle cx="500" cy="200" r="6" fill="#fff"/>
-      </svg>
-    </div>
-    <div class="haze"></div>
-  </div>
-
-  <div class="hero-content container">
-    <div class="hero-copy reveal">
-      <span class="eyebrow"><span class="live-dot"></span> <span data-version></span></span>
-      <h1 class="hero-title"><span class="t1">ePitch Master</span><span class="t2">สนามแห่งเซียน</span></h1>
-      <p class="hero-sub">คู่มือ eFootball™ ภาษาไทย แยกตามแพลตฟอร์ม — เลือกหัวข้อจากเมนูด้านล่าง</p>
-    </div>
-  </div>
+<section class="page-hero slim">
+  <div class="container"><h1 class="ph-title reveal">🧬 พัฒนานักเตะ</h1></div>
 </section>
-<section class="section home-menu" id="menu">
+<section class="section first" id="development">
   <div class="container">
-    <div class="home-grid">
-      <h2 class="home-gh reveal">ปุ่มควบคุม</h2>
-      <div class="home-cards">
-        <a class="hcard glass reveal" href="ps5.html"><span class="hc-ic" aria-hidden="true">🎮</span><span class="hc-tx"><b>PS5</b><small>ปุ่มจอย DualSense · เทคนิค · สกิล</small></span><span class="hc-go" aria-hidden="true">→</span></a>
-        <a class="hcard glass reveal" href="xbox.html"><span class="hc-ic" aria-hidden="true">🟢</span><span class="hc-tx"><b>Xbox</b><small>ปุ่มจอย Xbox · เทคนิค · สกิล</small></span><span class="hc-go" aria-hidden="true">→</span></a>
-        <a class="hcard glass reveal" href="pc.html"><span class="hc-ic" aria-hidden="true">⌨️</span><span class="hc-tx"><b>PC</b><small>Steam · คีย์บอร์ด · จอยบน PC</small></span><span class="hc-go" aria-hidden="true">→</span></a>
-        <a class="hcard glass reveal" href="mobile.html"><span class="hc-ic" aria-hidden="true">📱</span><span class="hc-tx"><b>มือถือ</b><small>Classic · Touch &amp; Flick · Remote Play</small></span><span class="hc-go" aria-hidden="true">→</span></a>
+    <div class="glass card reveal">
+      <h3>🧬 10 หมวดของ Progression Points</h3>
+      <div class="cat-chips" id="progCats"></div>
+      <p class="footnote" id="progCatsNote"></p>
+    </div>
+    <div class="grid-2 tight">
+      <div class="table-block reveal">
+        <h3 class="tb-title atk">📍 ลำดับความสำคัญตามตำแหน่ง</h3>
+        <div class="table-wrap"><table class="ctrl prog" id="progTable"></table></div>
+        <p class="footnote" id="progTableNote"></p>
       </div>
-      <h2 class="home-gh reveal">เล่นให้เก่ง</h2>
-      <div class="home-cards">
-        <a class="hcard glass reveal" href="tactics.html"><span class="hc-ic" aria-hidden="true">🧠</span><span class="hc-tx"><b>แผน &amp; แท็กติก</b><small>19 แผน · Fluid Formation · คำสั่ง</small></span><span class="hc-go" aria-hidden="true">→</span></a>
-        <a class="hcard glass reveal" href="skills.html"><span class="hc-ic" aria-hidden="true">🌀</span><span class="hc-tx"><b>สกิลเลี้ยงบอล</b><small>ท่าหลอก · รับบอล · ยิง · ส่ง</small></span><span class="hc-go" aria-hidden="true">→</span></a>
-        <a class="hcard glass reveal" href="players.html"><span class="hc-ic" aria-hidden="true">🧬</span><span class="hc-tx"><b>พัฒนานักเตะ</b><small>Progression · ความคุ้มค่า</small></span><span class="hc-go" aria-hidden="true">→</span></a>
-      </div>
-      <h2 class="home-gh reveal">ติดตาม</h2>
-      <div class="home-cards">
-        <a class="hcard glass reveal live" href="scores.html"><span class="hc-ic" aria-hidden="true">🔴</span><span class="hc-tx"><b>ผลบอลสด <i class="nav-live-dot" aria-hidden="true"></i></b><small>โปรแกรม · ผลสด · ผู้ทำประตู</small></span><span class="hc-go" aria-hidden="true">→</span></a>
-        <a class="hcard glass reveal" href="news.html"><span class="hc-ic" aria-hidden="true">📰</span><span class="hc-tx"><b>ข่าว</b><small>อีเวนต์ · อัปเดต · เมตา</small></span><span class="hc-go" aria-hidden="true">→</span></a>
-      </div>
-      <h2 class="home-gh reveal">อื่น ๆ</h2>
-      <div class="home-cards">
-        <a class="hcard glass reveal" href="about.html"><span class="hc-ic" aria-hidden="true">ℹ️</span><span class="hc-tx"><b>เกี่ยวกับเกม</b><small>แพลตฟอร์ม · Cross-play · โหมด · แหล่งข้อมูล</small></span><span class="hc-go" aria-hidden="true">→</span></a>
-      </div>
-      <h2 class="home-gh reveal">เติมเงิน</h2>
-      <div class="topup glass reveal">
-        <div class="tp-head"><span class="hc-ic" aria-hidden="true">🪙</span><div><h3>เติม eFootball Coin</h3><p>ผ่าน eFootball™ Web Store ที่ดำเนินการโดย Coda (Codashop) ผู้ขายที่ได้รับอนุญาต</p></div></div>
-        <ol class="tp-steps">
-          <li>ผูกบัญชี eFootball กับ <b>KONAMI ID</b> ในเกมก่อน</li>
-          <li>เปิดร้าน เลือกประเทศ แล้วล็อกอินด้วย KONAMI ID ที่ผูกกับเกม</li>
-          <li>ตรวจบัญชี จำนวน Coin และราคาให้ถูกก่อนจ่ายทุกครั้ง</li>
-        </ol>
-        <a class="btn btn-neon tp-btn" href="https://efootball.codashop.com/international" target="_blank" rel="noopener">ไปที่ร้านเติม Coin ↗</a>
-        <p class="tp-note">ลิงก์ตรงไปยังร้าน ไม่มีโค้ดแนะนำหรือค่าคอมมิชชัน · ร้านแจ้งว่าไม่รับผิดชอบหากกรอกบัญชีผิด</p>
+      <div>
+        <h3 class="sub-title reveal mt0">🧠 หลักการลงแต้ม</h3>
+        <div class="stack" id="progPrinciples"></div>
       </div>
     </div>
+    <h3 class="sub-title reveal">💰 เลือกนักเตะให้คุ้มค่า</h3>
+    <div class="grid-3 snap" id="valueTips"></div>
   </div>
 </section>
 </main>
@@ -177,6 +127,7 @@
 <button class="to-top" id="toTop" type="button" aria-label="กลับขึ้นด้านบน">↑</button>
 
 <script src="data/site.js?v=a6ce8e96"></script>
+<script src="data/players.js?v=6b03f9fd"></script>
 <script src="script.js?v=e79c5dde"></script>
 </body>
 </html>

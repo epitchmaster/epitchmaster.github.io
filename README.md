@@ -1,20 +1,25 @@
 # ePitch Master ⚽
 
-เว็บไซต์คู่มือ eFootball ภาษาไทย รวมเทคนิคการเล่น แทคติก การพัฒนานักเตะ และข่าวสารล่าสุด สำหรับผู้เล่นทั้งบนคอนโซลและมือถือ
-
-## ดูเว็บไซต์
+เว็บไซต์คู่มือ eFootball ภาษาไทย แยกหน้าตามหัวข้อ เข้าทุกหน้าได้จากเมนู (ปุ่ม ☰) ที่อยู่บนทุกหน้า
 
 🔗 https://epitchmaster.github.io/
 
-## โครงสร้างไฟล์
+## หน้าเว็บ
 
-- `index.html` – หน้าเว็บหลัก
-- `style.css` – สไตล์และการจัดหน้า
-- `script.js` – การทำงานฝั่งหน้าเว็บ
-- `data.js` – ข้อมูลเนื้อหาของคู่มือ
+| หน้า | เนื้อหา | ไฟล์ข้อมูล |
+|---|---|---|
+| `index.html` | หน้าแรก (เมนูการ์ด) | – |
+| `ps5.html` | ปุ่ม PS5 / PS4 | `data/ps5.js` + `data/skills.js` |
+| `xbox.html` | ปุ่ม Xbox | `data/xbox.js` + `data/skills.js` |
+| `pc.html` | PC (Steam) คีย์บอร์ด + จอย | `data/pc.js` + `data/skills.js` |
+| `mobile.html` | มือถือ + PS Remote Play | `data/mobile.js` + `data/skills.js` |
+| `scores.html` | ผลบอลสด | `data/scores-config.js` + `livescore.js` |
+| `tactics.html` | แผน & แท็กติก | `data/tactics.js` |
+| `skills.html` | สกิลเลี้ยงบอล | `data/skills.js` |
+| `players.html` | พัฒนานักเตะ | `data/players.js` |
+| `news.html` | ข่าว & อีเวนต์ | `data/news.js` |
+| `about.html` | แพลตฟอร์ม · โหมด · แหล่งข้อมูล | `data/about.js` |
 
-## การใช้งานบนเครื่อง
+ทุกหน้าโหลด `data/site.js` (เวอร์ชันเกม), `style.css` และ `script.js` ร่วมกัน
 
-เปิดไฟล์ `index.html` ด้วยเบราว์เซอร์ได้ทันที ไม่ต้องติดตั้งอะไรเพิ่ม
-
-เว็บไซต์เผยแพร่ผ่าน GitHub Pages
+ไฟล์ `*.html` สร้างอัตโนมัติจากต้นฉบับ (layout + เนื้อหาแต่ละหน้า) — ข่าวประจำวันแก้ที่ `data/news.js`

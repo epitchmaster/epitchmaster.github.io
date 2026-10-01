@@ -1,24 +1,25 @@
-/* ePitch Master — renderer & interactions (เนื้อหาทั้งหมดอยู่ใน data.js) */
+/* ePitch Master — ตัวแสดงผลกลางของทุกหน้า
+   เนื้อหาอยู่ใน data/*.js (แต่ละหน้าโหลดเฉพาะไฟล์ของตัวเอง) · หน้า HTML สร้างจาก src/ ด้วย /workspace/build.py */
 (function () {
   "use strict";
-  var D = window.EPM;
-  if (!D) { console.error("data.js not loaded"); return; }
-
+  var D = window.EPM || {};
+  var PAGE = document.body.getAttribute("data-page") || "";
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
-  var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
+  var esc = function (s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
+  function html(id, s) { var el = document.getElementById(id); if (el) el.innerHTML = s; return el; }
+  function has(id) { return !!document.getElementById(id); }
 
   /* ---------- button tokens → styled keycaps ---------- */
   var KEYS = {
     X: '<i class="k ps-x" title="Cross">✕</i>', O: '<i class="k ps-o" title="Circle">○</i>',
     T: '<i class="k ps-t" title="Triangle">△</i>', S: '<i class="k ps-s" title="Square">□</i>',
-    A: '<i class="k xb-a">A</i>', B: '<i class="k xb-b">B</i>', Y: '<i class="k xb-y">Y</i>', XX: '<i class="k xb-x">X</i>',
+    A: '<i class="k xb-a" title="ปุ่ม A">A</i>', B: '<i class="k xb-b" title="ปุ่ม B">B</i>', Y: '<i class="k xb-y" title="ปุ่ม Y">Y</i>', XX: '<i class="k xb-x" title="ปุ่ม X">X</i>',
     LS: stickChip("LS", "LS = Left Stick ก้านอนาล็อกซ้าย (บนจอยไม่มีตัวหนังสือ LS)", false),
     RS: stickChip("RS", "RS = Right Stick ก้านอนาล็อกขวา (บนจอยไม่มีตัวหนังสือ RS)", false),
     L3: stickChip("L3", "L3 = กดก้านอนาล็อกซ้ายลง", true),
     R3: stickChip("R3", "R3 = กดก้านอนาล็อกขวาลง", true)
   };
-  /* analog stick seen from above: base ring + thumb cap; tilt arrows, or a press-down marker for L3/R3 */
   function stickChip(label, title, press) {
     var marks = press
       ? '<path class="st-press" d="M12 5.2v4.6M9.9 8l2.1 2.2L14.1 8"/>'
@@ -28,227 +29,371 @@
       '<circle class="st-base" cx="12" cy="12" r="8.6"/><circle class="st-cap" cx="12" cy="12" r="5.6"/>' +
       '<circle class="st-grip" cx="12" cy="12" r="3.4"/>' + marks + '</svg><b>' + label + '</b></i>';
   }
+  /* [X] = ปุ่มจอย · {X} = ปุ่มคีย์บอร์ด */
   function kbd(str) {
     return esc(str).replace(/\[([A-Z0-9]+)\]/g, function (m, t) {
-      if (KEYS[t]) return KEYS[t];
-      return '<i class="k sh">' + t + "</i>";
-    });
+      return KEYS[t] || '<i class="k sh">' + t + "</i>";
+    }).replace(/\{([^{}\s]{1,6})\}/g, function (m, t) { return '<i class="k kb">' + t + "</i>"; });
   }
+  var XB = { X: "A", O: "B", S: "XX", T: "Y", L1: "LB", R1: "RB", L2: "LT", R2: "RT" };
+  function toXb(s) { return String(s || "").replace(/\[([A-Z0-9]+)\]/g, function (m, t) { return "[" + (XB[t] || t) + "]"; }); }
   function fmtDate(iso) {
     var m = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
-    var p = iso.split("-");
+    var p = String(iso).split("-");
     return parseInt(p[2], 10) + " " + m[parseInt(p[1], 10) - 1] + " " + p[0];
   }
-  function html(id, s) { var el = document.getElementById(id); if (el) el.innerHTML = s; }
   function cardHTML(o, cls) {
     return '<div class="glass mini reveal ' + (cls || "") + '"><span class="mini-ic">' + o.icon + "</span><h4>" + esc(o.t) + "</h4><p>" + kbd(o.d) + "</p></div>";
   }
 
-  /* ---------- HERO ---------- */
-  html("heroWeek", esc(D.meta.weekLabel));
-  html("heroVersion", "เวอร์ชันเกมที่อ้างอิง: <b>" + esc(D.meta.gameVersion) + "</b>");
-  html("platformChips", D.platforms.map(function (p) {
-    return '<span class="chip"><em>' + p.icon + "</em>" + esc(p.name) + "</span>";
-  }).join(""));
-  $$("[data-kbd]").forEach(function (el) { el.innerHTML = kbd(el.getAttribute("data-kbd")); });
-
-  /* ---------- 1) OVERVIEW ---------- */
-  html("crossplayList", D.crossplay.map(function (c) { return "<li>" + esc(c) + "</li>"; }).join(""));
-  html("modesGrid", D.modes.map(function (m) {
-    return '<div class="glass mini reveal"><span class="mini-ic">' + m.icon + "</span><h4>" + esc(m.name) + "</h4><p>" + esc(m.text) + "</p></div>";
-  }).join(""));
-
-  /* ---------- 2) CONSOLE TABLES ---------- */
-  function ctrlTable(rows) {
-    var h = "<thead><tr><th>คำสั่ง</th><th><span class='th-ps'>PlayStation</span></th><th><span class='th-xb'>Xbox / PC</span></th><th>หมายเหตุ</th></tr></thead><tbody>";
-    rows.forEach(function (r) {
-      h += "<tr" + (r.flag ? " class='flag'" : "") + "><td data-l='คำสั่ง'><b>" + esc(r.action) + (r.flag ? " <sup>*</sup>" : "") + "</b></td>" +
-        "<td data-l='PS' class='keys'><span class='v'>" + kbd(r.ps) + "</span></td>" +
-        "<td data-l='Xbox' class='keys'><span class='v'>" + kbd(r.xb) + "</span></td>" +
-        "<td data-l='หมายเหตุ' class='note'><span class='v'>" + kbd(r.note) + "</span></td></tr>";
-    });
-    return h + "</tbody>";
+  /* ---------- shared: version ---------- */
+  if (D.site) {
+    $$("[data-version]").forEach(function (el) { el.textContent = "อ้างอิง eFootball™ " + (D.site.versionShort || D.site.gameVersion); });
+    html("footVersion", "อ้างอิง " + esc(D.site.gameVersion) + " · ปุ่มและเมตาอาจเปลี่ยนหลังแพตช์ — ตรวจ Command List ในเกมเสมอ");
   }
-  html("tblAttack", ctrlTable(D.consoleControls.attack));
-  html("tblDefence", ctrlTable(D.consoleControls.defence));
-  html("tblGK", ctrlTable(D.consoleControls.gk));
-  html("consoleFoot", "ℹ️ " + kbd(D.consoleControls.footnote));
-  /* ---------- รู้จักปุ่มจอย PS5 ---------- */
-  if (D.buttonGlossary) {
-    var BG = D.buttonGlossary;
-    html("glossIntro", esc(BG.intro));
-    html("glossSticks", '<div class="gs-items">' + BG.sticks.map(function (x) {
+
+  /* ================= PLATFORM PAGES (PS5 / Xbox / PC / มือถือ) ================= */
+  var PF = D.platform;
+  var pfId = PF ? PF.id : "";
+  var isXb = pfId === "xbox" || pfId === "pc";
+  var HOW = { ps5: "🎮 PS5", xbox: "🟢 Xbox", pc: "🎮 จอยบน PC", mobile: "📱 มือถือ" };
+  if (PF) {
+    if (PF.hero) {
+      var Hh = PF.hero;
+      html("pfQuick", '<div class="hc-head"><span class="hc-title">' + esc(Hh.title) + '</span><span class="hc-pf">' + esc(Hh.tag) + "</span></div>" +
+        '<ul class="hc-list">' + Hh.items.map(function (it) { return "<li><span>" + esc(it[0]) + "</span><b>" + kbd(it[1]) + "</b></li>"; }).join("") + "</ul>" +
+        (Hh.stickNote ? '<p class="hc-stick">ℹ️ ' + kbd(Hh.stickNote) + "</p>" : ""));
+    }
+    if (PF.glossary && has("glossRows")) {
+      var BG = PF.glossary;
+      html("glossTitle", esc(BG.title));
+      html("glossIntro", esc(BG.intro));
+      html("glossSticks", '<div class="gs-items">' + BG.sticks.map(function (x) {
         return '<div class="gs-item"><span class="gs-ic">' + kbd(x.key) + "</span><span>" + esc(x.text) + "</span></div>";
       }).join("") + '</div><p class="gs-note">⚠️ ' + esc(BG.sticksNote) + '</p><p class="gs-ex">' + kbd(BG.example) + "</p>");
-    html("heroStick", 'ℹ️ ' + kbd("[LS]") + " = ก้านอนาล็อกซ้าย (บังคับนักเตะ) · " + kbd("[RS]") + ' = ก้านอนาล็อกขวา (เลี้ยงหลอก/สลับตัว) — บนจอยไม่มีตัวหนังสือ LS/RS · กดก้านลง = L3/R3 · <a href="#btnGlossary">ดู “รู้จักปุ่มจอย PS5”</a>');
-    html("glossRows", '<div class="gl-row gl-th"><span>ปุ่ม (PS5)</span><span>ชื่อเรียก · อยู่ตรงไหน</span><span>Xbox</span></div>' +
-      BG.rows.map(function (r) {
-        return '<div class="gl-row"><span class="gl-key">' + kbd(r.key) + '</span><span class="gl-desc"><b>' + esc(r.name) + "</b><small>" + esc(r.where) +
-          "</small>" + (r.use ? '<em class="gl-use"><span>ใช้ในเกม:</span> ' + kbd(r.use) + "</em>" : "") +
-          '</span><span class="gl-xb">' + kbd(r.xb) + "</span></div>";
+      html("glossRows", '<div class="gl-row gl-th"><span>ปุ่ม</span><span>ชื่อเรียก · อยู่ตรงไหน · ใช้ทำอะไร</span></div>' +
+        BG.rows.map(function (r) {
+          return '<div class="gl-row"><span class="gl-key">' + kbd(r.key) + '</span><span class="gl-desc"><b>' + esc(r.name) + "</b><small>" + esc(r.where) +
+            "</small>" + (r.use ? '<em class="gl-use"><span>ใช้ในเกม:</span> ' + kbd(r.use) + "</em>" : "") + "</span></div>";
+        }).join(""));
+      html("glossNote", "💡 " + esc(BG.note));
+    }
+    if (has("pfLegend")) {
+      html("pfLegend", (isXb
+        ? '<span><i class="k xb-a">A</i> A</span><span><i class="k xb-b">B</i> B</span><span><i class="k xb-x">X</i> X</span><span><i class="k xb-y">Y</i> Y</span>'
+        : '<span><i class="k ps-x">✕</i> Cross</span><span><i class="k ps-o">○</i> Circle</span><span><i class="k ps-t">△</i> Triangle</span><span><i class="k ps-s">□</i> Square</span>') +
+        '<span class="lg-flag">* = ยังไม่พบยืนยันในเอกสารทางการ</span>');
+    }
+    if (PF.controls && has("tblAttack")) {
+      var ctrlTable = function (rows) {
+        var h = "<thead><tr><th>คำสั่ง</th><th>ปุ่ม</th><th>หมายเหตุ</th></tr></thead><tbody>";
+        rows.forEach(function (r) {
+          h += "<tr" + (r.flag ? " class='flag'" : "") + "><td data-l='คำสั่ง'><b>" + esc(r.action) + (r.flag ? " <sup>*</sup>" : "") + "</b></td>" +
+            "<td data-l='ปุ่ม' class='keys'><span class='v'>" + kbd(r["in"]) + "</span></td>" +
+            "<td data-l='หมายเหตุ' class='note'><span class='v'>" + kbd(r.note) + "</span></td></tr>";
+        });
+        return h + "</tbody>";
+      };
+      html("tblAttack", ctrlTable(PF.controls.attack));
+      html("tblDefence", ctrlTable(PF.controls.defence));
+      html("tblGK", ctrlTable(PF.controls.gk));
+      html("consoleFoot", "ℹ️ " + kbd(PF.controls.footnote));
+    }
+    if (PF.callouts) html("pfCallouts", PF.callouts.map(function (c, i) {
+      return '<div class="callout glass' + (i === 0 ? " neon-edge" : "") + '"><b>' + c.icon + " " + esc(c.t) + "</b><p>" + kbd(c.d) + "</p></div>";
+    }).join(""));
+    if (PF.keyboard) {
+      var K = PF.keyboard;
+      html("kbIntro", "<b>⚠️ </b>" + esc(K.intro));
+      html("kbTitle", esc(K.title));
+      html("tblKeyboard", "<thead><tr><th>คำสั่ง</th><th>ปุ่ม</th><th>หมายเหตุ</th></tr></thead><tbody>" + K.rows.map(function (r) {
+        return "<tr class='flag'><td data-l='คำสั่ง'><b>" + esc(r.action) + " <sup>*</sup></b></td><td data-l='ปุ่ม' class='keys'><span class='v'>" + kbd(r.key) +
+          "</span></td><td data-l='หมายเหตุ' class='note'><span class='v'>" + esc(r.note || "รายงานจากผู้เล่น") + "</span></td></tr>";
+      }).join("") + "</tbody>");
+      html("kbRemap", K.remap.map(function (s) { return "<li><span>" + esc(s) + "</span></li>"; }).join(""));
+      html("kbRemapNote", "ℹ️ " + esc(K.remapNote));
+      html("kbPad", K.pad.map(function (s) { return "<li>" + kbd(s) + "</li>"; }).join(""));
+    }
+    if (PF.techniques) {
+      var tech = function (list, cls) {
+        return list.map(function (t) {
+          return '<div class="glass tcard reveal ' + cls + '"><div class="t-top"><span class="mini-ic">' + t.icon + "</span><h4>" + esc(t.t) + "</h4></div><p>" + esc(t.d) + "</p>" +
+            '<div class="how"><span class="how-l">' + HOW[pfId] + "</span>" + kbd(t.how) + "</div></div>";
+        }).join("");
+      };
+      html("techAttack", tech(PF.techniques.attack, "atk"));
+      html("techDefence", tech(PF.techniques.defence, "def"));
+    }
+    if (PF.classic) {
+      var scheme = function (s, cls, icon) {
+        return '<div class="glass card scheme reveal ' + cls + '"><div class="scheme-head"><span class="scheme-ic">' + icon + "</span><div><h3>" + esc(s.title) + "</h3><p>" + esc(s.desc) + "</p></div></div>" +
+          '<ul class="gestures">' + s.rows.map(function (r) {
+            return '<li><span class="g">' + esc(r.g) + '</span><span class="arrow">→</span><span class="a">' + esc(r.a) + "</span></li>";
+          }).join("") + "</ul></div>";
+      };
+      html("mobileSchemes", scheme(PF.classic, "classic", "🕹️") + scheme(PF.flick, "flick", "👆"));
+      html("mobileTips", PF.tips.map(function (t) { return cardHTML(t); }).join(""));
+      html("mobileFoot", "ℹ️ " + esc(PF.footnote));
+    }
+    if (PF.remotePlay) {
+      var R = PF.remotePlay;
+      html("remoteNote", "<b>💡 </b>" + kbd(R.note));
+      html("remoteReqs", R.reqs.map(function (r) { return "<div><dt>" + esc(r.k) + "</dt><dd>" + esc(r.v) + "</dd></div>"; }).join(""));
+      html("remoteSteps", R.steps.map(function (s) { return "<li><b>" + esc(s.t) + "</b><span>" + esc(s.d) + "</span></li>"; }).join(""));
+      html("remoteLatency", R.latency.map(function (t) { return cardHTML(t); }).join(""));
+      var cmp = function (o, cls, ic) {
+        return '<div class="glass card cmp reveal ' + cls + '"><h3>' + ic + " " + esc(o.title) + '</h3><div class="pc"><ul class="pros">' +
+          o.pros.map(function (p) { return "<li>" + kbd(p) + "</li>"; }).join("") + '</ul><ul class="cons">' +
+          o.cons.map(function (p) { return "<li>" + kbd(p) + "</li>"; }).join("") + "</ul></div></div>";
+      };
+      html("remoteCompare", cmp(R.compare.touch, "touch", "👆") + cmp(R.compare.pad, "pad recommended", "🎮"));
+    }
+  }
+
+  /* ================= SKILLS (catalogue + per-platform lists) ================= */
+  var SK = D.skills;
+  var SKP = { ps5: { l: "PS5", ic: "🎮" }, xbox: { l: "Xbox", ic: "🟢" }, pc: { l: "PC (จอย)", ic: "⌨️" }, mc: { l: "มือถือ Classic", ic: "🕹️" }, tf: { l: "Touch & Flick", ic: "👆" } };
+  function skInput(s, p) {
+    if (p === "mc" || p === "tf") return s[p] || "";
+    if (!s.con) return "";
+    return p === "ps5" ? s.con : toXb(s.con);
+  }
+  function skLevel(s, p) { return (p === "mc" || p === "tf") ? (s[p] ? s.mlv : "none") : (s.con ? s.lv : "none"); }
+  var LVCLS = { off: "lv-off", com: "lv-com", none: "lv-none" };
+  function lvBadge(lv) { return '<span class="sk-lv ' + LVCLS[lv] + '">' + esc(SK.levels[lv]) + "</span>"; }
+  function catName(c) { for (var i = 0; i < SK.cats.length; i++) if (SK.cats[i][0] === c) return SK.cats[i][1]; return c; }
+  function inCell(s, p) {
+    var v = skInput(s, p);
+    return v ? kbd(v) : '<span class="sk-na">ยังไม่พบข้อมูลยืนยัน</span>';
+  }
+  if (SK && has("pfSkills") && PF) {
+    var pl = pfId === "mobile" ? ["mc", "tf"] : [pfId];
+    html("pfSkillNote", "🌀 " + kbd(pfId === "mobile" ? "บนมือถือ เกมเริ่มที่ Feint Command Type แบบ Smart — วิธีกดด้านล่างเป็นข้อมูลชุมชน (GamingonPhone) ตรวจในเกมอีกครั้ง" : (isXb ? toXb(SK.setting) : SK.setting)));
+    var cur = "";
+    html("pfSkills", SK.skills.filter(function (s) { return s.cat !== "card" && pl.some(function (p) { return skInput(s, p); }); }).map(function (s) {
+      var head = s.cat !== cur ? '<h3 class="sk-cat reveal">' + esc(catName(s.cat)) + "</h3>" : ""; cur = s.cat;
+      return head + '<div class="sk-row reveal"><div class="sk-n"><b>' + esc(s.name) + "</b><small>" + esc(s.th) + "</small>" +
+        (s.card ? '<span class="sk-card">🃏 ' + esc(s.card) + "</span>" : "") + '</div><div class="sk-ins">' +
+        pl.map(function (p) {
+          return '<div class="sk-in">' + (pl.length > 1 ? '<span class="sk-pl">' + SKP[p].l + "</span>" : "") + inCell(s, p) + lvBadge(skLevel(s, p)) + "</div>";
+        }).join("") + "</div></div>";
+    }).join(""));
+  }
+  if (SK && PAGE === "skills" && has("skList")) {
+    var st = { p: "ps5", c: "", q: "" };
+    try { var sp = localStorage.getItem("epm-skill-pf"); if (SKP[sp]) st.p = sp; } catch (e) {}
+    html("skBar",
+      '<div class="sk-pick" role="group" aria-label="เลือกแพลตฟอร์ม">' + Object.keys(SKP).map(function (k) {
+        return '<button type="button" class="sk-pbtn" data-p="' + k + '"><span aria-hidden="true">' + SKP[k].ic + "</span>" + SKP[k].l + "</button>";
+      }).join("") + "</div>" +
+      '<div class="sk-tools"><div class="sk-cats" role="group" aria-label="หมวด"><button type="button" class="sk-cbtn" data-c="">ทั้งหมด</button>' +
+      SK.cats.map(function (c) { return '<button type="button" class="sk-cbtn" data-c="' + c[0] + '">' + esc(c[1]) + "</button>"; }).join("") + "</div>" +
+      '<label class="sk-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg><input type="search" id="skQ" placeholder="ค้นหาท่า เช่น Marseille, กรรไกร" autocomplete="off" aria-label="ค้นหาท่า"></label></div>');
+    html("skSources", SK.sources.map(function (s) { return '<li><a href="' + esc(s.url) + '" target="_blank" rel="noopener">' + esc(s.name) + "</a></li>"; }).join("") +
+      "<li>" + lvBadge("off") + " " + lvBadge("com") + " " + lvBadge("none") + "</li>");
+    var open = {};
+    var renderSk = function () {
+      $$(".sk-pbtn").forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-p") === st.p)); });
+      $$(".sk-cbtn").forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-c") === st.c)); });
+      var setting = st.p === "mc" || st.p === "tf" ? "บนมือถือ เกมเริ่มที่ Feint Command Type แบบ Smart — วิธีกดท่าหลอกบนมือถือส่วนใหญ่มาจากแหล่งชุมชน (GamingonPhone)" : (st.p === "ps5" ? SK.setting : toXb(SK.setting));
+      html("skSetting", "🌀 " + kbd(setting));
+      var q = st.q, list = SK.skills.filter(function (s) {
+        if (st.c && s.cat !== st.c) return false;
+        if (q && (s.name + " " + s.th + " " + s.what + " " + (s.card || "")).toLowerCase().indexOf(q) < 0) return false;
+        return true;
+      });
+      if (!list.length) { html("skList", '<div class="ls-empty">ไม่พบท่าที่ค้นหา</div>'); return; }
+      html("skList", list.map(function (s) {
+        var o = !!open[s.id], v = skInput(s, st.p);
+        return '<article class="sk-item glass' + (o ? " open" : "") + '" data-id="' + s.id + '"><button type="button" class="sk-head" aria-expanded="' + o + '">' +
+          '<span class="sk-n"><b>' + esc(s.name) + "</b><small>" + esc(s.th) + " · " + esc(catName(s.cat)) + "</small></span>" +
+          '<span class="sk-prev">' + (v ? kbd(v) : '<span class="sk-na">' + (s.cat === "card" ? "อัตโนมัติ" : "ยังไม่พบข้อมูล") + "</span>") + "</span>" +
+          '<span class="ls-chev" aria-hidden="true"></span></button>' +
+          (o ? '<div class="sk-body"><p><b>ทำอะไร:</b> ' + esc(s.what) + "</p><p><b>ใช้เมื่อ:</b> " + esc(s.when) + "</p>" +
+            (s.card ? '<p><span class="sk-card">🃏 ' + esc(s.card) + "</span></p>" : "") +
+            '<div class="sk-in big"><span class="sk-pl">' + SKP[st.p].ic + " " + SKP[st.p].l + "</span>" + inCell(s, st.p) + lvBadge(skLevel(s, st.p)) + "</div>" +
+            (s.note ? '<p class="sk-note">ℹ️ ' + kbd(s.note) + "</p>" : "") + "</div>" : "") + "</article>";
       }).join(""));
-    html("glossNote", "💡 " + esc(BG.note));
+    };
+    $("#skBar").addEventListener("click", function (e) {
+      var b = e.target.closest(".sk-pbtn"); if (b) { st.p = b.getAttribute("data-p"); try { localStorage.setItem("epm-skill-pf", st.p); } catch (er) {} renderSk(); return; }
+      var c = e.target.closest(".sk-cbtn"); if (c) { st.c = c.getAttribute("data-c"); renderSk(); }
+    });
+    var qT; $("#skQ").addEventListener("input", function () { var v = this.value; clearTimeout(qT); qT = setTimeout(function () { st.q = v.trim().toLowerCase(); renderSk(); }, 150); });
+    $("#skList").addEventListener("click", function (e) { var h = e.target.closest(".sk-head"); if (!h) return; var id = h.parentNode.getAttribute("data-id"); open[id] = !open[id]; renderSk(); });
+    var pq = (location.search.match(/[?&]pf=(ps5|xbox|pc|mc|tf)/) || [])[1]; if (pq) st.p = pq;
+    renderSk();
   }
 
-  /* ---------- 3) MOBILE ---------- */
-  function scheme(s, cls, icon) {
-    return '<div class="glass card scheme reveal ' + cls + '"><div class="scheme-head"><span class="scheme-ic">' + icon + "</span><div><h3>" + esc(s.title) + "</h3><p>" + esc(s.desc) + "</p></div></div>" +
-      '<ul class="gestures">' + s.rows.map(function (r) {
-        return '<li><span class="g">' + esc(r.g) + '</span><span class="arrow">→</span><span class="a">' + esc(r.a) + "</span></li>";
-      }).join("") + "</ul></div>";
-  }
-  html("mobileSchemes", scheme(D.mobileControls.classic, "classic", "🕹️") + scheme(D.mobileControls.flick, "flick", "👆"));
-  html("mobileTips", D.mobileControls.tips.map(function (t) { return cardHTML(t); }).join(""));
-  html("mobileFoot", "ℹ️ " + esc(D.mobileControls.footnote));
-
-  /* ---------- REMOTE PLAY ---------- */
-  var R = D.remotePlay;
-  html("remoteNote", "<b>💡 </b>" + kbd(R.note));
-  html("remoteReqs", R.reqs.map(function (r) { return "<div><dt>" + esc(r.k) + "</dt><dd>" + esc(r.v) + "</dd></div>"; }).join(""));
-  html("remoteSteps", R.steps.map(function (s) { return "<li><b>" + esc(s.t) + "</b><span>" + esc(s.d) + "</span></li>"; }).join(""));
-  html("remoteLatency", R.latency.map(function (t) { return cardHTML(t); }).join(""));
-  function cmp(o, cls, ic) {
-    return '<div class="glass card cmp reveal ' + cls + '"><h3>' + ic + " " + esc(o.title) + '</h3><div class="pc"><ul class="pros">' +
-      o.pros.map(function (p) { return "<li>" + kbd(p) + "</li>"; }).join("") + '</ul><ul class="cons">' +
-      o.cons.map(function (p) { return "<li>" + kbd(p) + "</li>"; }).join("") + "</ul></div></div>";
-  }
-  html("remoteCompare", cmp(R.compare.touch, "touch", "👆") + cmp(R.compare.pad, "pad recommended", "🎮"));
-
-  /* ---------- 4) TECHNIQUES ---------- */
-  function tech(list, cls) {
-    return list.map(function (t) {
-      return '<div class="glass tcard reveal ' + cls + '"><div class="t-top"><span class="mini-ic">' + t.icon + "</span><h4>" + esc(t.t) + "</h4></div><p>" + esc(t.d) + "</p>" +
-        '<div class="how only-console"><span class="how-l">🎮 คอนโซล</span>' + kbd(t.console) + "</div>" +
-        '<div class="how only-mobile"><span class="how-l">📱 มือถือ</span>' + kbd(t.mobile) + "</div></div>";
-    }).join("");
-  }
-  html("techAttack", tech(D.techniques.attack, "atk"));
-  html("techDefence", tech(D.techniques.defence, "def"));
-
-  /* ---------- 5) FORMATIONS (SVG pitch) ---------- */
+  /* ================= TACTICS ================= */
   var pitchN = 0;
   function pitchSVG(pos) {
-    var W = 200, H = 260, gid = "pg" + (pitchN++);
-    var s = '<svg class="fpitch" viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="ตำแหน่งผู้เล่น">' +
+    var gid = "pg" + (pitchN++);
+    var s = '<svg class="fpitch" viewBox="0 0 200 260" role="img" aria-label="ตำแหน่งผู้เล่น">' +
       '<defs><linearGradient id="' + gid + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0c3b2a"/><stop offset="1" stop-color="#0a2c22"/></linearGradient></defs>' +
       '<rect x="0" y="0" width="200" height="260" rx="12" fill="url(#' + gid + ')"/>';
     for (var i = 0; i < 8; i++) s += '<rect x="6" y="' + (6 + i * 31) + '" width="188" height="15.5" fill="rgba(255,255,255,.025)"/>';
     s += '<g fill="none" stroke="rgba(255,255,255,.35)" stroke-width="1.4"><rect x="6" y="6" width="188" height="248" rx="4"/><line x1="6" y1="130" x2="194" y2="130"/><circle cx="100" cy="130" r="22"/>' +
       '<rect x="52" y="6" width="96" height="36"/><rect x="76" y="6" width="48" height="14"/><rect x="52" y="218" width="96" height="36"/><rect x="76" y="240" width="48" height="14"/></g>';
     pos.forEach(function (p, idx) {
-      var x = 6 + p[0] / 100 * 188, y = 6 + p[1] / 100 * 248;
-      var gk = p[2] === "GK";
+      var x = 6 + p[0] / 100 * 188, y = 6 + p[1] / 100 * 248, gk = p[2] === "GK";
       s += '<g class="pl" style="--d:' + (idx * 40) + 'ms"><circle cx="' + x + '" cy="' + y + '" r="9.5" class="' + (gk ? "gkc" : "plc") + '"/>' +
         '<text x="' + x + '" y="' + (y + 19) + '" text-anchor="middle">' + p[2] + "</text></g>";
     });
     return s + "</svg>";
   }
-  html("formations", D.formations.map(function (f) {
-    return '<article class="glass fcard reveal"><div class="f-head"><h4>' + esc(f.name) + '</h4><span class="tag">' + esc(f.tag) + "</span></div>" + pitchSVG(f.pos) +
-      '<dl class="fdl"><div><dt>✅ จุดแข็ง</dt><dd>' + esc(f.good) + "</dd></div><div><dt>⚠️ จุดอ่อน</dt><dd>" + esc(f.bad) + "</dd></div><div><dt>🧭 เข้ากับ</dt><dd>" + esc(f.fit) + "</dd></div></dl></article>";
-  }).join(""));
-  html("fluidNote", "<b>🆕 Fluid Formation:</b> " + esc(D.fluidNote));
-  html("playstyles", D.playstyles.map(function (p) {
-    return '<div class="glass ps-card reveal' + (p.isNew ? " is-new" : "") + '"><div class="ps-head"><span class="mini-ic">' + p.icon + "</span><h4>" + esc(p.name) + "</h4>" + (p.isNew ? '<span class="new">ใหม่ v6</span>' : "") + "</div>" +
-      '<p><b>ใช้เมื่อ:</b> ' + esc(p.when) + '</p><p><b>ทีมเล่นแบบ:</b> ' + esc(p.how) + '</p><p class="watch"><b>ระวัง:</b> ' + esc(p.watch) + "</p></div>";
-  }).join(""));
-  html("instructions", D.instructions.map(function (i) {
-    return '<div class="ins"><span class="side ' + (i.side === "รุก" ? "s-atk" : "s-def") + '">' + esc(i.side) + "</span><b>" + esc(i.name) + "</b><p>" + esc(i.d) + "</p></div>";
-  }).join(""));
-  html("instrNote", "ℹ️ " + esc(D.instructionsNote));
+  var TC = D.tactics;
+  if (TC && has("formations")) {
+    html("tacIntro", "ℹ️ " + esc(TC.intro));
+    html("posEdit", "<b>✋ " + esc(TC.positionEdit.t) + "</b><p>" + esc(TC.positionEdit.d) + "</p>");
+    html("fluidNote", "<b>🆕 " + esc(TC.fluid.t) + "</b><p>" + esc(TC.fluid.d) + "</p>");
+    var styles = TC.playstyles.map(function (p) { return p.name; });
+    var fs = { b: "", s: "", t: "" }, fopen = {};
+    var chip = function (k, v, l) { return '<button type="button" class="fm-chip" data-k="' + k + '" data-v="' + esc(v) + '">' + esc(l) + "</button>"; };
+    html("fmFilters",
+      '<div class="fm-row" role="group" aria-label="จำนวนกองหลัง"><span class="fm-l">กองหลัง</span>' + chip("b", "", "ทั้งหมด") + chip("b", "3", "3 ตัว") + chip("b", "4", "4 ตัว") + chip("b", "5", "5 ตัว") + "</div>" +
+      '<div class="fm-row" role="group" aria-label="ชนิดแผน"><span class="fm-l">ชนิด</span>' + chip("t", "", "ทั้งหมด") + chip("t", "p", "พรีเซ็ต") + chip("t", "c", "Position Edit") + "</div>" +
+      '<div class="fm-row" role="group" aria-label="Team Playstyle"><span class="fm-l">สไตล์</span>' + chip("s", "", "ทั้งหมด") + styles.map(function (n) { return chip("s", n, n); }).join("") + "</div>" +
+      '<p class="fm-count" id="fmCount"></p>');
+    var renderF = function () {
+      $$(".fm-chip").forEach(function (b) { b.setAttribute("aria-pressed", String(fs[b.getAttribute("data-k")] === b.getAttribute("data-v"))); });
+      var list = TC.formations.filter(function (f) {
+        if (fs.b && String(f.backs) !== fs.b) return false;
+        if (fs.t === "p" && !f.preset) return false;
+        if (fs.t === "c" && f.preset) return false;
+        if (fs.s && f.fit.indexOf(fs.s) < 0) return false;
+        return true;
+      });
+      html("fmCount", "แสดง <b>" + list.length + "</b> จาก " + TC.formations.length + " แผน");
+      html("formations", list.length ? list.map(function (f) {
+        var o = !!fopen[f.name];
+        return '<article class="glass fcard' + (o ? " open" : "") + '" data-f="' + esc(f.name) + '"><div class="f-head"><h3>' + esc(f.name) + "</h3>" +
+          '<span class="tag' + (f.preset ? "" : " custom") + '">' + (f.preset ? "พรีเซ็ต" : "Position Edit") + "</span></div>" +
+          '<p class="f-tag">' + esc(f.tag) + "</p>" + pitchSVG(f.pos) +
+          '<dl class="fdl"><div><dt>✅ จุดแข็ง</dt><dd>' + esc(f.good) + "</dd></div><div><dt>⚠️ จุดอ่อน</dt><dd>" + esc(f.bad) + "</dd></div>" +
+          "<div><dt>🧭 เข้ากับ</dt><dd>" + f.fit.map(function (x) { return '<span class="fit">' + esc(x) + "</span>"; }).join("") + "</dd></div></dl>" +
+          '<button type="button" class="f-more" aria-expanded="' + o + '">' + (o ? "ซ่อนรายละเอียด" : "บทบาท · คำสั่ง · เคล็ดลับ") + ' <span class="ls-chev" aria-hidden="true"></span></button>' +
+          (o ? '<div class="f-detail"><h4>👥 บทบาทแนะนำ (Playing Style)</h4><ul class="f-roles">' + f.roles.map(function (r) { return '<li><span class="pos">' + esc(r[0]) + "</span>" + esc(r[1]) + "</li>"; }).join("") + "</ul>" +
+            "<h4>📝 คำสั่งแนะนำ</h4><p>" + esc(f.instr) + "</p>" +
+            '<div class="how"><span class="how-l">🎮 คอนโซล</span>' + kbd(f.con) + '</div><div class="how"><span class="how-l">📱 มือถือ</span>' + kbd(f.mob) + "</div>" +
+            (f.meta ? '<p class="f-meta">📊 ' + esc(f.meta) + "</p>" : "") + "</div>" : "") + "</article>";
+      }).join("") : '<div class="ls-empty">ไม่มีแผนที่ตรงกับตัวกรอง</div>');
+    };
+    $("#fmFilters").addEventListener("click", function (e) { var b = e.target.closest(".fm-chip"); if (!b) return; fs[b.getAttribute("data-k")] = b.getAttribute("data-v"); renderF(); });
+    $("#formations").addEventListener("click", function (e) { var b = e.target.closest(".f-more"); if (!b) return; var n = b.closest(".fcard").getAttribute("data-f"); fopen[n] = !fopen[n]; renderF(); });
+    renderF();
+    html("playstyles", TC.playstyles.map(function (p) {
+      return '<div class="glass ps-card reveal' + (p.isNew ? " is-new" : "") + '"><div class="ps-head"><span class="mini-ic">' + p.icon + "</span><h4>" + esc(p.name) + "</h4>" + (p.isNew ? '<span class="new">ใหม่ v6</span>' : "") + "</div>" +
+        '<p><b>ใช้เมื่อ:</b> ' + esc(p.when) + '</p><p><b>ทีมเล่นแบบ:</b> ' + esc(p.how) + '</p><p class="watch"><b>ระวัง:</b> ' + esc(p.watch) + "</p></div>";
+    }).join(""));
+    html("instructions", TC.instructions.map(function (i) {
+      return '<div class="ins"><span class="side ' + (i.side === "รุก" ? "s-atk" : "s-def") + '">' + esc(i.side) + "</span><b>" + esc(i.name) + "</b><p>" + esc(i.d) + "</p></div>";
+    }).join(""));
+    html("instrNote", "ℹ️ " + esc(TC.instructionsNote));
+    html("tacV6", TC.v6.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join(""));
+    html("tacLevels", "<b>🎚️ ปรับระดับเกมรุก/รับ</b><p>" + esc(TC.levels) + "</p>");
+    html("tacNotIn", "<b>🚫 ไม่มีในเกมปัจจุบัน</b><p>" + esc(TC.notInGame) + "</p>");
+    html("tacSources", TC.sources.map(function (s) { return '<li><a href="' + esc(s.url) + '" target="_blank" rel="noopener">' + esc(s.name) + "</a> <small>" + esc(s.date) + "</small></li>"; }).join(""));
+  }
 
-  /* ---------- 6) DEVELOPMENT ---------- */
-  var P = D.progression;
-  html("progCats", P.categories.map(function (c, i) { return '<span class="cat" style="--i:' + i + '">' + esc(c) + "</span>"; }).join(""));
-  html("progCatsNote", esc(P.categoriesNote));
-  html("progTable", "<thead><tr><th>ตำแหน่ง</th><th>ลงก่อน (หลัก)</th><th>รอง</th></tr></thead><tbody>" +
-    P.byPosition.map(function (r) { return "<tr><td data-l='ตำแหน่ง'><span class='pos'>" + esc(r.pos) + "</span></td><td data-l='หลัก'><span class='v'><b>" + esc(r.main) + "</b></span></td><td data-l='รอง' class='note'><span class='v'>" + esc(r.sub) + "</span></td></tr>"; }).join("") + "</tbody>");
-  html("progTableNote", "ℹ️ " + esc(P.byPositionNote));
-  html("progPrinciples", P.principles.map(function (t) { return cardHTML(t, "row"); }).join(""));
-  html("valueTips", P.value.map(function (t) { return cardHTML(t); }).join(""));
+  /* ================= PLAYERS ================= */
+  var PG = D.players;
+  if (PG && has("progCats")) {
+    html("progCats", PG.categories.map(function (c, i) { return '<span class="cat" style="--i:' + i + '">' + esc(c) + "</span>"; }).join(""));
+    html("progCatsNote", esc(PG.categoriesNote));
+    html("progTable", "<thead><tr><th>ตำแหน่ง</th><th>ลงก่อน (หลัก)</th><th>รอง</th></tr></thead><tbody>" +
+      PG.byPosition.map(function (r) { return "<tr><td data-l='ตำแหน่ง'><span class='pos'>" + esc(r.pos) + "</span></td><td data-l='หลัก'><span class='v'><b>" + esc(r.main) + "</b></span></td><td data-l='รอง' class='note'><span class='v'>" + esc(r.sub) + "</span></td></tr>"; }).join("") + "</tbody>");
+    html("progTableNote", "ℹ️ " + esc(PG.byPositionNote));
+    html("progPrinciples", PG.principles.map(function (t) { return cardHTML(t, "row"); }).join(""));
+    html("valueTips", PG.value.map(function (t) { return cardHTML(t); }).join(""));
+  }
 
-  /* ---------- 7) NEWS ---------- */
-  html("updateBadge", '<span class="live-dot"></span> อัปเดตล่าสุด <b>' + fmtDate(D.meta.lastUpdated) + "</b> · " + esc(D.meta.gameVersion) + '<br><span class="next">ถัดไป: ' + esc(D.meta.nextVersion) + "</span>");
-  html("newsList", D.news.map(function (n) {
-    return '<article class="tl-item glass reveal' + (n.hot ? " hot" : "") + '"><div class="tl-date"><b>' + fmtDate(n.date) + '</b><span class="tag">' + esc(n.tag) + "</span></div><h4>" + esc(n.title) + "</h4><p>" + esc(n.body) + '</p><div class="tl-src">' +
-      n.sources.map(function (s) { return '<a href="' + esc(s.url) + '" target="_blank" rel="noopener">↗ ' + esc(s.name) + "</a>"; }).join("") + "</div></article>";
-  }).join(""));
-  html("metaNotes", D.metaNotes.map(function (m) {
-    return '<div class="meta-it"><span>' + m.icon + "</span><div><b>" + esc(m.title) + "</b><p>" + esc(m.text) + '</p><small>แหล่ง: ' + esc(m.src) + "</small></div></div>";
-  }).join(""));
-  html("officialLinks", D.officialLinks.map(function (l) {
-    return '<a href="' + esc(l.url) + '" target="_blank" rel="noopener"><span>' + l.icon + "</span>" + esc(l.name) + "<em>↗</em></a>";
-  }).join(""));
+  /* ================= NEWS ================= */
+  if (D.news && has("newsList")) {
+    var M = D.meta || {};
+    html("updateBadge", '<span class="live-dot"></span> อัปเดตล่าสุด <b>' + fmtDate(M.lastUpdated) + "</b>" + (M.weekLabel ? " · " + esc(M.weekLabel) : "") +
+      (M.nextVersion ? '<br><span class="next">ถัดไป: ' + esc(M.nextVersion) + "</span>" : ""));
+    html("newsList", D.news.map(function (n) {
+      return '<article class="tl-item glass reveal' + (n.hot ? " hot" : "") + '"><div class="tl-date"><b>' + fmtDate(n.date) + '</b><span class="tag">' + esc(n.tag) + "</span></div><h4>" + esc(n.title) + "</h4><p>" + esc(n.body) + '</p><div class="tl-src">' +
+        (n.sources || []).map(function (s) { return '<a href="' + esc(s.url) + '" target="_blank" rel="noopener">↗ ' + esc(s.name) + "</a>"; }).join("") + "</div></article>";
+    }).join(""));
+    html("metaNotes", (D.metaNotes || []).map(function (m) {
+      return '<div class="meta-it"><span>' + m.icon + "</span><div><b>" + esc(m.title) + "</b><p>" + esc(m.text) + '</p><small>แหล่ง: ' + esc(m.src) + "</small></div></div>";
+    }).join(""));
+    html("officialLinks", (D.officialLinks || []).map(function (l) {
+      return '<a href="' + esc(l.url) + '" target="_blank" rel="noopener"><span>' + l.icon + "</span>" + esc(l.name) + "<em>↗</em></a>";
+    }).join(""));
+  }
 
-  /* ---------- FOOTER SOURCES ---------- */
-  html("sourcesGrid", D.sources.map(function (g) {
-    return '<div class="src-col"><h4>' + g.icon + " " + esc(g.type) + ' <span class="' + (g.used ? "used" : "watch") + '">' + (g.used ? "ใช้อ้างอิงฉบับนี้" : "ช่องทางติดตามรายสัปดาห์") + "</span></h4><ul>" +
-      g.items.map(function (i) { return '<li><a href="' + esc(i.url) + '" target="_blank" rel="noopener">' + esc(i.name) + "</a></li>"; }).join("") + "</ul></div>";
-  }).join(""));
-  html("footUpdated", "อัปเดตเนื้อหาล่าสุด " + fmtDate(D.meta.lastUpdated) + " · ปุ่มและเมตาอาจเปลี่ยนหลังแพตช์ — ตรวจ Command List ในเกมเสมอ · แก้ไขเนื้อหาทั้งหมดได้ที่ไฟล์ data.js");
+  /* ================= ABOUT ================= */
+  var AB = D.about;
+  if (AB && has("crossplayList")) {
+    html("crossplayList", AB.crossplay.map(function (c) { return "<li>" + esc(c) + "</li>"; }).join(""));
+    html("platformChips", AB.platforms.map(function (p) { return '<span class="chip"><em>' + p.icon + "</em>" + esc(p.name) + "</span>"; }).join(""));
+    html("modesGrid", AB.modes.map(function (m) {
+      return '<div class="glass mini reveal"><span class="mini-ic">' + m.icon + "</span><h4>" + esc(m.name) + "</h4><p>" + esc(m.text) + "</p></div>";
+    }).join(""));
+    html("sourcesGrid", AB.sources.map(function (g) {
+      return '<div class="src-col"><h4>' + g.icon + " " + esc(g.type) + ' <span class="' + (g.used ? "used" : "watch") + '">' + (g.used ? "ใช้อ้างอิง" : "ช่องทางติดตามรายสัปดาห์") + "</span></h4><ul>" +
+        g.items.map(function (i) { return '<li><a href="' + esc(i.url) + '" target="_blank" rel="noopener">' + esc(i.name) + "</a></li>"; }).join("") + "</ul></div>";
+    }).join(""));
+  }
 
   /* ---------- swipe hints for mobile carousels ---------- */
   $$(".snap").forEach(function (el) {
+    if (!el.children.length) return;
     var h = document.createElement("div");
     h.className = "snap-hint";
     h.innerHTML = "ปัดซ้าย–ขวาเพื่อดูทั้งหมด (" + el.children.length + ") <i>→</i>";
     el.parentNode.insertBefore(h, el);
   });
 
-  /* ---------- PLATFORM TOGGLE ---------- */
-  var root = document.documentElement;
-  function setPlatform(p, save) {
-    root.setAttribute("data-platform", p);
-    $$("[data-set-platform]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-set-platform") === p)); });
-    if (save) { try { localStorage.setItem("epm-platform", p); } catch (e) {} }
+  /* ---------- MENU (hamburger on every page) ---------- */
+  var nav = $("#nav"), burger = $("#burger"), menu = $("#navMenu"), backdrop = $("#menuBackdrop");
+  function setMenu(open) {
+    if (!menu) return;
+    nav.classList.toggle("open", open); menu.classList.toggle("open", open); if (backdrop) backdrop.classList.toggle("open", open);
+    document.body.classList.toggle("menu-open", open);
+    burger.setAttribute("aria-expanded", String(open)); burger.setAttribute("aria-label", open ? "ปิดเมนู" : "เปิดเมนู");
+    if (open) { var c = menu.querySelector(".is-current") || menu.querySelector("a"); if (c) try { c.focus({ preventScroll: true }); } catch (e) {} }
   }
-  var saved = null; try { saved = localStorage.getItem("epm-platform"); } catch (e) {}
-  var qp = (location.search.match(/platform=(console|mobile)/) || [])[1];
-  setPlatform(qp || saved || "console", false);
-  $$("[data-set-platform]").forEach(function (b) {
-    b.addEventListener("click", function () { setPlatform(b.getAttribute("data-set-platform"), true); });
-  });
+  if (burger && menu) {
+    burger.addEventListener("click", function () { setMenu(!menu.classList.contains("open")); });
+    if (backdrop) backdrop.addEventListener("click", function () { setMenu(false); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && menu.classList.contains("open")) { setMenu(false); burger.focus(); } });
+    $$("a", menu).forEach(function (a) { a.addEventListener("click", function () { setMenu(false); }); });
+  }
+  window.EPMcloseMenu = function () { setMenu(false); };
 
-  /* ---------- NAV: burger, scrollspy, progress ---------- */
-  var nav = $("#nav"), burger = $("#burger"), links = $("#navLinks");
-  burger.addEventListener("click", function () {
-    var open = nav.classList.toggle("open");
-    burger.setAttribute("aria-expanded", String(open));
-  });
-  $$("#navLinks a").forEach(function (a) { a.addEventListener("click", function () { nav.classList.remove("open"); burger.setAttribute("aria-expanded", "false"); }); });
-
-  var sections = ["home", "console", "mobile", "remote", "techniques", "tactics", "development", "news"].map(function (id) { return document.getElementById(id); });
+  /* ---------- scroll progress / to-top ---------- */
   var prog = $("#scrollProgress"), toTop = $("#toTop");
   function onScroll() {
     var y = window.scrollY, h = document.documentElement.scrollHeight - window.innerHeight;
-    prog.style.transform = "scaleX(" + (h > 0 ? y / h : 0) + ")";
-    nav.classList.toggle("scrolled", y > 30);
-    toTop.classList.toggle("show", y > 700);
-    var cur = "home";
-    sections.forEach(function (s) { if (s && s.getBoundingClientRect().top < window.innerHeight * 0.35) cur = s.id; });
-    $$("#navLinks a").forEach(function (a) { a.classList.toggle("active", a.getAttribute("href") === "#" + cur); });
+    if (prog) prog.style.transform = "scaleX(" + (h > 0 ? y / h : 0) + ")";
+    nav.classList.toggle("scrolled", y > 20);
+    if (toTop) toTop.classList.toggle("show", y > 700);
   }
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
-  toTop.addEventListener("click", function () { window.scrollTo({ top: 0, behavior: "smooth" }); });
+  if (toTop) toTop.addEventListener("click", function () { window.scrollTo({ top: 0, behavior: "smooth" }); });
 
-  /* ---------- REVEAL ON SCROLL ---------- */
+  /* ---------- reveal on scroll ---------- */
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var items = $$(".reveal");
   if (reduce || !("IntersectionObserver" in window)) {
     items.forEach(function (el) { el.classList.add("in"); });
   } else {
     var io = new IntersectionObserver(function (ents) {
-      ents.forEach(function (e) {
-        if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
-      });
-    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
-    items.forEach(function (el, i) { el.style.setProperty("--rd", (i % 4) * 70 + "ms"); io.observe(el); });
+      ents.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+    }, { rootMargin: "0px 0px -6% 0px", threshold: 0.05 });
+    items.forEach(function (el, i) { el.style.setProperty("--rd", (i % 4) * 60 + "ms"); io.observe(el); });
   }
+  /* content rendered later (filters, expand) is shown immediately */
+  window.EPMreveal = function (root) { $$(".reveal", root).forEach(function (el) { el.classList.add("in"); }); };
 
   /* ---------- subtle parallax on hero beams ---------- */
-  if (!reduce) {
-    var hero = $(".stadium");
+  var hero = $(".stadium");
+  if (!reduce && hero) {
     window.addEventListener("pointermove", function (e) {
       var x = (e.clientX / window.innerWidth - 0.5) * 2, y = (e.clientY / window.innerHeight - 0.5) * 2;
       hero.style.setProperty("--px", x.toFixed(3));
@@ -324,9 +469,7 @@
   }
   function open() {
     lastFocus = document.activeElement;
-    var nav = document.getElementById("nav"), burger = document.getElementById("burger");
-    if (nav) nav.classList.remove("open");
-    if (burger) burger.setAttribute("aria-expanded", "false");
+    if (window.EPMcloseMenu) window.EPMcloseMenu();
     panel.hidden = false; backdrop.hidden = false;
     document.body.classList.add("rp-open");
     fab.setAttribute("aria-expanded", "true");

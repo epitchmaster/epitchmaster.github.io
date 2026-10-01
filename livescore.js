@@ -7,35 +7,21 @@
   var root = document.getElementById("liveScore");
   if (!root) return;
 
-  /*LEAGUES-START*/var LEAGUES = {"606":["fifa.world","FIFA World Cup","4"],"620":["bol.1","Bolivian Liga Profesional","1949"],"630":["bra.1","Brazilian Serie A","85"],"640":["chi.1","Chilean Primera División","86"],"650":["col.1","Colombian Primera A","1543"],"660":["ecu.1","LigaPro Ecuador","1944"],"670":["per.1","Peruvian Liga 1","1813"],"680":["uru.1","Liga AUF Uruguaya","1592"],"700":["eng.1","English Premier League","23"],"710":["fra.1","French Ligue 1","9"],"715":["por.1","Portuguese Primeira Liga","14"],"720":["ger.1","German Bundesliga","10"],"725":["ned.1","Dutch Eredivisie","11"],"730":["ita.1","Italian Serie A","12"],"735":["sco.1","Scottish Premiership","45"],"740":["esp.1","Spanish LALIGA","15"],"745":["arg.1","Argentine Liga Profesional de Fútbol","1"],"750":["jpn.1","Japanese J.League","2199"],"760":["mex.1","Mexican Liga BBVA MX","22"],"770":["usa.1","MLS","19"],"775":["uefa.champions","UEFA Champions League","2"],"776":["uefa.europa","UEFA Europa League","2310"],"780":["conmebol.america","Copa América","83"],"781":["uefa.euro","UEFA European Championship","74"],"782":["fifa.intercontinental.cup","Intercontinental Cup (India)",""],"783":["conmebol.libertadores","CONMEBOL Libertadores","58"],"786":["fifa.worldq.uefa","FIFA World Cup Qualifying - UEFA","67"],"787":["fifa.worldq.conmebol","FIFA World Cup Qualifying - CONMEBOL","65"],"788":["fifa.worldq.concacaf","FIFA World Cup Qualifying - Concacaf","64"],"789":["fifa.worldq.afc","FIFA World Cup Qualifying - AFC","62"],"790":["fifa.worldq.caf","FIFA World Cup Qualifying - CAF","63"],"792":["fifa.worldq.ofc","FIFA World Cup Qualifying - OFC","66"],"795":["fifa.wwc","FIFA Women's World Cup","60"],"2265":["bra.camp.carioca","Brazilian Campeonato Carioca","2265"],"2272":["bra.camp.gaucho","Brazilian Campeonato Gaucho","2272"],"2391":["caf.champions","CAF Champions League","2391"],"2395":["uefa.nations","UEFA Nations League","2395"],"2466":["afc.cup","AFC Champions League Two","2243"],"3901":["bel.1","Belgian Pro League","6"],"3902":["afc.champions","AFC Champions League Elite","2200"],"3903":["arg.2","Argentine Nacional B","2294"],"3904":["arg.3","Argentine Primera B","2308"],"3906":["aus.1","Australian A-League Men","1308"],"3907":["aut.1","Austrian Bundesliga","5"],"3908":["caf.nations","Africa Cup of Nations","76"],"3911":["concacaf.u23","CONCACAF U23 Tournament",""],"3913":["den.1","Danish Superliga",""],"3914":["eng.2","English League Championship","24"],"3915":["eng.3","English League One","25"],"3916":["eng.4","English League Two","26"],"3917":["eng.5","English National League",""],"3918":["eng.fa","English FA Cup","40"],"3920":["eng.league_cup","English Carabao Cup","41"],"3921":["esp.2","Spanish LALIGA 2",""],"3922":["fifa.friendly","International Friendly","53"],"3923":["fifa.friendly.w","Women's International Friendly","70"],"3924":["fifa.olympics","Men's Olympic Soccer Tournament","71"],"3925":["fifa.w.olympics","Women's Olympic Soccer Tournament","84"],"3926":["fra.2","French Ligue 2",""],"3927":["ger.2","German 2. Bundesliga","97"],"3928":["gua.1","Guatemalan Liga Nacional","2248"],"3929":["hon.1","Honduran Liga Nacional","2247"],"3931":["ita.2","Italian Serie B",""],"3932":["mex.2","Mexican Liga de Expansión MX","2306"],"3933":["ned.2","Dutch Keuken Kampioen Divisie","105"],"3934":["par.1","Paraguayan Primera División","1892"],"3937":["rsa.1","South African Premiership",""],"3939":["rus.1","Russian Premier League","106"],"3940":["sco.2","Scottish Championship",""],"3943":["slv.1","Salvadoran Primera Division","2244"],"3945":["swe.1","Swedish Allsvenskan","16"],"3946":["tur.1","Turkish Super Lig","18"],"3947":["uefa.euroq","UEFA European Championship Qualifying","56"],"3948":["uru.2","Segunda División de Uruguay",""],"3949":["ven.1","Venezuelan Primera División","1947"],"3951":["esp.copa_del_rey","Spanish Copa del Rey","80"],"3952":["fra.coupe_de_france","Coupe de France","182"],"3954":["ger.dfb_pokal","German Cup","2061"],"3955":["gre.1","Greek Super League","98"],"3956":["ita.coppa_italia","Coppa Italia","2192"],"3957":["ned.cup","Dutch KNVB Beker","2196"],"3959":["sco.tennents","Scottish Cup",""],"3960":["nor.1","Norwegian Eliteserien",""],"4002":["usa.usl.1","USL Championship","2292"],"4004":["concacaf.gold","Concacaf Gold Cup","59"],"4005":["crc.1","Costa Rican Primera Division","2245"],"4007":["bra.2","Brazilian Serie B","2299"],"5329":["eng.charity","English FA Community Shield",""],"5330":["sco.cis","Scottish League Cup",""],"5331":["sco.challenge","Scottish League Challenge Cup",""],"5337":["usa.open","U.S. Open Cup","69"],"5342":["fifa.w.concacaf.olympicsq","Concacaf Women's Olympic Qualifying",""],"5454":["conmebol.sudamericana","CONMEBOL Sudamericana","1208"],"5462":["uefa.super_cup","UEFA Super Cup","1272"],"5487":["usa.ncaa.m.1","NCAA Men's Soccer",""],"5499":["usa.ncaa.w.1","NCAA Women's Soccer",""],"5501":["fifa.cwc","FIFA Club World Cup","1932"],"5662":["afc.cupq","AFC Asian Cup Qualifiers",""],"5672":["aff.championship","ASEAN Championship","2261"],"5692":["concacaf.champions_cup","CONCACAF Champions Cup",""],"5693":["uefa.euro_u21","UEFA European Under-21 Championship",""],"5694":["fifa.world.u20","FIFA Under-20 World Cup","2285"],"5697":["fifa.world.u17","FIFA Under-17 World Cup","2288"],"5698":["uefa.euro.u19","UEFA European Under-19 Championship",""],"5699":["concacaf.champions","Concacaf Champions Cup","2298"],"8097":["eng.w.1","English Women's Super League","2314"],"8101":["ger.super_cup","German Supercup",""],"8102":["esp.super_cup","Spanish Supercopa","431"],"8103":["ita.super_cup","Italian Supercoppa",""],"8107":["arg.copa","Copa Argentina","2320"],"8207":["bra.camp.paulista","Brazilian Campeonato Paulista","2322"],"8301":["usa.nwsl","NWSL","2323"],"8304":["ger.playoff.relegation","German Bundesliga Promotion/Relegation Playoff",""],"8305":["ned.playoff.relegation","Dutch Eredivisie Promotion/Relegation Playoffs",""],"8306":["bra.copa_do_brazil","Copa do Brasil","528"],"8312":["chi.copa_chi","Copa Chile",""],"8313":["col.copa","Copa Colombia","2332"],"8315":["caf.nations_qual","Africa Cup of Nations Qualifying",""],"8316":["ind.1","Indian Super League","2334"],"8333":["conmebol.recopa","CONMEBOL Recopa","2335"],"8346":["arg.supercopa","Argentine Supercopa","2343"],"8357":["fra.super_cup","French Trophee des Champions",""],"8360":["concacaf.confederations_playoff","Concacaf Cup",""],"8364":["chi.super_cup","Chilean Supercopa",""],"8365":["caf.championship","African Nations Championship",""],"8376":["chn.1","Chinese Super League","2350"],"10749":["ned.supercup","Dutch Johan Cruyff Shield",""],"10872":["bra.camp.mineiro","Brazilian Campeonato Mineiro","2360"],"11108":["friendly.emirates_cup","Emirates Cup",""],"17893":["mex.campeon","Mexican Campeon de Campeones",""],"17915":["uefa.weuro","UEFA Women's European Championship","2381"],"17929":["esp.joan_gamper","Trofeo Joan Gamper",""],"17931":["jpn.world_challenge","Japanese J.League World Challenge",""],"18000":["caf.confed","CAF Confederation Cup",""],"18481":["eng.trophy","English EFL Trophy","42"],"18771":["campeones.cup","Campeones Cup",""],"18914":["afc.saff.championship","SAFF Championship",""],"18969":["concacaf.womens.championship","Concacaf W Championship","18969"],"18992":["aus.w.1","Australian A-League Women",""],"19112":["col.superliga","Colombian Superliga",""],"19264":["arg.copa_de_la_superliga","Argentine Copa de la Superliga","2407"],"19267":["concacaf.nations.league","Concacaf Nations League","2406"],"19425":["concacaf.leagues.cup","Leagues Cup","2410"],"19483":["uefa.wchampions","UEFA Women's Champions League","2408"],"19705":["arg.trofeo_de_la_campeones","Argentine Trofeo de Campeones",""],"19721":["bra.supercopa_do_brazil","Brazilian Supercopa Rei",""],"19725":["nonfifa","Non-FIFA Friendly",""],"19727":["fifa.conmebol.olympicsq","CONMEBOL Pre-Olympic Tournament","19727"],"19728":["fifa.shebelieves","SheBelieves Cup",""],"19778":["concacaf.gold_qual","Concacaf Gold Cup Qualifying",""],"19831":["fifa.concacaf.olympicsq","Men's Olympic Qualifying Playoff",""],"19834":["club.friendly","Club Friendly",""],"19868":["usa.nwsl.cup","NWSL Challenge Cup","2445"],"19871":["ger.2.promotion.relegation","German Bundesliga 2. Promotion/Relegation Playoffs",""],"19874":["uefa.champions_qual","UEFA Champions League Qualifying",""],"19887":["uefa.europa_qual","UEFA Europa League Qualifying",""],"19915":["usa.usl.l1","USL League One","2452"],"19945":["ned.w.1","Dutch Vrouwen Eredivisie","2453"],"19948":["chn.1.promotion.relegation","Chinese Super League Promotion/Relegation Playoffs",""],"19968":["swe.1.promotion.relegation","Swedish Allsvenskan Promotion/Relegation Playoffs",""],"19989":["nor.1.promotion.relegation","Norwegian Eliteserien Promotion/Relegation Playoffs",""],"20114":["uefa.euro_u21_qual","UEFA European Under-21 Championship Qualifying",""],"20115":["ned.w.knvb_cup","Dutch KNVB Beker Vrouwen",""],"20116":["bel.promotion.relegation","Belgian Pro League Promotion/Relegation Playoffs",""],"20132":["fifa.friendly_u21","Under-21 International Friendly",""],"20133":["sco.1.promotion.relegation","Scottish Premiership Promotion/Relegation Playoffs",""],"20134":["sco.2.promotion.relegation","Scottish Championship Promotion/Relegation Playoffs",""],"20159":["fra.1.promotion.relegation","French Ligue 1 Promotion/Relegation Playoffs",""],"20186":["por.1.promotion.relegation","Portuguese Primeira Liga Promotion/Relegation Playoffs",""],"20219":["afc.asian.cup","AFC Asian Cup",""],"20220":["caf.cosafa","COSAFA Cup",""],"20221":["uefa.europa.conf_qual","UEFA Conference League Qualifying",""],"20226":["eng.w.fa","English Women's FA Cup",""],"20296":["uefa.europa.conf","UEFA Conference League","20296"],"20381":["esp.copa_de_la_reina","Spanish Copa de la Reina",""],"20524":["chi.1.promotion.relegation","Chilean Primera División Promotion/Relegation Playoffs",""],"20525":["bol.ply.rel","Bolivian Liga Profesional Promotion/Relegation Playoffs",""],"20526":["par.1.supercopa","Paraguayan Supercopa",""],"20566":["global.arnold.clark_cup","Arnold Clark Cup",""],"20571":["global.pinatar_cup","Pinatar Cup",""],"20649":["fifa.wworldq.uefa","FIFA Women's World Cup Qualifying - UEFA",""],"20703":["conmebol.america.femenina","Copa América Femenina",""],"20704":["global.finalissima","CONMEBOL-UEFA Cup of Champions",""],"20731":["rus.1.promotion.relegation","Russian Premier League Relegation/Promotion Playoffs",""],"20798":["ned.3.promotion.relegation","Dutch Tweede Divisie Promotion/Relegation Playoffs",""],"20865":["fifa.wworld.u17","FIFA Under-17 Women's World Cup",""],"20922":["por.taca.portugal","Taca de Portugal",""],"20955":["fra.w.1","French Première Ligue",""],"20956":["esp.w.1","Spanish Liga F",""],"21191":["global.w.finalissima","CONMEBOL-UEFA Women's Cup of Champions",""],"21231":["ksa.1","Saudi Pro League","2488"],"21597":["global.club_challenge","CONMEBOL-UEFA Club Challenge",""],"22057":["ksa.kings.cup","Saudi King's Cup",""],"22059":["usa.usl.l1.cup","USL Cup",""],"22060":["concacaf.w.gold","Concacaf W Gold Cup",""],"22781":["global.u20.intercontinental_cup","CONMEBOL-UEFA U20 Intercontinental Cup",""],"22902":["fifa.intercontinental_cup","FIFA Intercontinental Cup",""],"22946":["concacaf.w.champions_cup","Concacaf W Champions Cup",""],"22947":["concacaf.central.american.cup","Concacaf Central American Cup",""],"23088":["uefa.w.nations","UEFA Women's Nations League",""],"23107":["global.gulf_cup","Arabian Gulf Cup",""],"23284":["bol.copa","Copa Bolivia",""],"23286":["can.w.nsl","Northern Super League",""],"23348":["arg.supercopa.internacional","Argentine Supercopa Internacional",""],"23390":["eng.w.league_cup","English WSL Players Cup",""],"23449":["fifa.wcq.ply","FIFA World Cup Qualifying - Playoff Tournament",""],"23480":["eng.fa_qual","English FA Cup Qualifying",""],"23523":["caf.w.nations","Women's Africa Cup of Nations",""],"23537":["afc.w.asian.cup","AFC Women's Asian Cup",""],"23633":["usa.w.usl.1","USL Super League",""],"24079":["uefa.w.europa","UEFA Women's Europa Cup",""],"24081":["fifa.w.champions_cup","FIFA Women's Champions Cup",""],"24220":["mex.w.1","Mexican Liga BBVA MX Femenil",""],"24405":["eng.w.promotion.relegation","English Women's Super League Promotion/Relegation Playoff",""],"24452":["afc.champions_qual","AFC Champions League Elite Qualifying",""],"24455":["afc.cup_qual","AFC Champions League Two Qualifying",""],"24457":["sco.tennents_qual","Scottish Cup Qualifying",""],"24458":["uefa.wchampions_qual","UEFA Women's Champions League Qualifying",""]};/*LEAGUES-END*/
+  var CFG = (window.EPM && window.EPM.scores) || { pinned: [], tsdb: [], leagues: {}, refreshMs: 45000 };
+  var LEAGUES = CFG.leagues;
 
   var TZ = "Asia/Bangkok";
   var ESPN = "https://site.api.espn.com/apis/site/v2/sports/soccer/";
   var TSDB = "https://www.thesportsdb.com/api/v1/json/3/";
-  var REFRESH_MS = 45000;
+  var REFRESH_MS = CFG.refreshMs || 45000;
 
   /* pinned leagues (order = display priority) + Thai names */
-  var PIN = [
-    ["eng.1", "พรีเมียร์ลีก อังกฤษ"], ["esp.1", "ลาลีกา สเปน"], ["ita.1", "เซเรียอา อิตาลี"],
-    ["ger.1", "บุนเดสลีกา เยอรมนี"], ["fra.1", "ลีกเอิง ฝรั่งเศส"], ["tsdb.4743", "ไทยลีก 1"],
-    ["uefa.champions", "ยูฟ่า แชมเปียนส์ลีก"], ["uefa.europa", "ยูฟ่า ยูโรปาลีก"], ["uefa.europa.conf", "ยูฟ่า คอนเฟอเรนซ์ลีก"],
-    ["fifa.world", "ฟุตบอลโลก"], ["uefa.nations", "ยูฟ่า เนชันส์ลีก"], ["fifa.worldq.afc", "ฟุตบอลโลก รอบคัดเลือก โซนเอเชีย"],
-    ["afc.asian.cup", "เอเชียนคัพ"], ["afc.cupq", "เอเชียนคัพ รอบคัดเลือก"], ["afc.champions", "เอเอฟซี แชมเปียนส์ลีก อีลิต"],
-    ["afc.cup", "เอเอฟซี แชมเปียนส์ลีก ทู"], ["fifa.friendly", "อุ่นเครื่องทีมชาติ"], ["eng.fa", "เอฟเอคัพ อังกฤษ"],
-    ["eng.league_cup", "คาราบาวคัพ อังกฤษ"], ["eng.2", "แชมเปียนชิป อังกฤษ"], ["tsdb.4744", "ไทยลีก 2"],
-    ["ksa.1", "ซาอุดี โปรลีก"], ["jpn.1", "เจลีก ญี่ปุ่น"], ["ned.1", "เอเรดิวิซี เนเธอร์แลนด์"],
-    ["por.1", "ลีกา โปรตุเกส"], ["sco.1", "สกอตติช พรีเมียร์ชิป"], ["tur.1", "ซูเปอร์ลีก ตุรกี"],
-    ["esp.copa_del_rey", "โกปาเดลเรย์ สเปน"], ["ita.coppa_italia", "โกปปาอิตาเลีย"], ["ger.dfb_pokal", "เดเอฟเบ โพคาล เยอรมนี"],
-    ["fra.coupe_de_france", "คูปเดอฟร็องส์"], ["usa.1", "เอ็มแอลเอส สหรัฐฯ"], ["concacaf.nations.league", "คอนคาเคฟ เนชันส์ลีก"], ["conmebol.libertadores", "โกปาลิเบร์ตาโดเรส"],
-    ["bra.1", "บราซิล เซเรียอา"], ["arg.1", "ลีกสูงสุด อาร์เจนตินา"], ["aus.1", "เอลีก ออสเตรเลีย"], ["chn.1", "ไชนีสซูเปอร์ลีก"]
-  ];
+  var PIN = CFG.pinned;
   var PIN_IDX = {}, TH_NAME = {};
   PIN.forEach(function (p, i) { PIN_IDX[p[0]] = i; TH_NAME[p[0]] = p[1]; });
   var TOP5 = { "eng.1": 1, "esp.1": 1, "ita.1": 1, "ger.1": 1, "fra.1": 1, "tsdb.4743": 1, "uefa.champions": 1, "uefa.europa": 1 };
-  var TSDB_LEAGUES = [
-    { id: "4743", key: "tsdb.4743", name: "Thai League 1", logo: "https://r2.thesportsdb.com/images/media/league/badge/u3sarf1644247696.png/tiny" },
-    { id: "4744", key: "tsdb.4744", name: "Thai League 2", logo: "" }
-  ];
+  var TSDB_LEAGUES = CFG.tsdb;
+  var COUNTRY = CFG.country || {};
 
   /* ---------- helpers ---------- */
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
@@ -163,7 +149,7 @@
   }
 
   /* ---------- state ---------- */
-  var S = { day: bkkDay(new Date()), filter: "all", league: "", q: "", open: {}, loading: true, err: "", warn: "", events: [], updated: null };
+  var S = { day: bkkDay(new Date()), filter: "all", view: "league", league: "", q: "", open: {}, exp: {}, more: 0, loading: true, err: "", warn: "", events: [], updated: null };
   var timer = null, started = false;
 
   function load(force) {
@@ -202,6 +188,8 @@
 
   /* ---------- render ---------- */
   function lgName(lg) { return TH_NAME[lg.key] || lg.en; }
+  function lgCountry(key) { return COUNTRY[String(key).split(".")[0]] || ""; }
+  function isLive(m) { return m.st.k === "live" || m.st.k === "break"; }
   function groupSort(a, b) {
     var pa = PIN_IDX[a.key], pb = PIN_IDX[b.key];
     if (pa != null || pb != null) return (pa == null ? 999 : pa) - (pb == null ? 999 : pb);
@@ -209,53 +197,67 @@
     return a.en.localeCompare(b.en);
   }
   function crest(url, name, cls) {
-    var ini = esc((name || "?").replace(/[^A-Za-z0-9\u0E00-\u0E7F ]/g, "").split(" ").filter(Boolean).map(function (w) { return w[0]; }).join("").slice(0, 2) || "⚽");
+    var ini = esc((name || "?").replace(/[^A-Za-z0-9\u0E00-\u0E7F ]/g, "").split(" ").filter(Boolean).map(function (w) { return w[0]; }).join("").slice(0, 2).toUpperCase() || "⚽");
     return '<span class="' + cls + '" data-ini="' + ini + '">' + (url ? '<img src="' + esc(url) + '" alt="" loading="lazy" decoding="async" onerror="this.remove()">' : "") + "</span>";
   }
-  function badge(m) {
-    var s = m.st;
-    if (s.k === "live") return '<span class="ls-badge live"><i></i>LIVE</span>' + (s.clock ? '<b class="ls-min">' + esc(s.clock) + "</b>" : "") + "<small>" + esc(s.label) + "</small>";
-    if (s.k === "break") return '<span class="ls-badge brk">' + esc(s.label) + "</span>";
-    if (s.k === "post") return '<span class="ls-badge ft">' + esc(s.label) + "</span>";
-    if (s.k === "off") return '<span class="ls-badge off">' + esc(s.label) + "</span><small>" + hhmm(m.t) + " น.</small>";
-    return '<span class="ls-time">' + hhmm(m.t) + '</span><small>ยังไม่เตะ</small>';
+  /* centre column: score (or kickoff time) + status badge */
+  function centre(m) {
+    var s = m.st, sc = function (t) { return t.score != null && t.score !== "" ? esc(t.score) : "–"; };
+    var showScore = s.k === "live" || s.k === "break" || s.k === "post" || (s.k === "off" && m.home.score != null && m.home.score !== "" && m.home.score !== "0");
+    var mid = showScore
+      ? '<span class="ls-score">' + sc(m.home) + '<i>-</i>' + sc(m.away) + "</span>" +
+        (m.home.so != null && m.away.so != null ? '<span class="ls-pens">จุดโทษ ' + esc(m.home.so) + "-" + esc(m.away.so) + "</span>" : "")
+      : '<span class="ls-ko">' + hhmm(m.t) + "</span>";
+    var b;
+    if (s.k === "live") b = '<span class="ls-badge live"><i></i>' + (s.clock ? esc(s.clock) : "LIVE") + "</span>";
+    else if (s.k === "break") b = '<span class="ls-badge brk">' + esc(s.label) + "</span>";
+    else if (s.k === "post") b = '<span class="ls-badge ft">' + (s.label === "จบเกม" ? "จบ" : esc(s.label.replace("จบเกม ", "จบ "))) + "</span>";
+    else if (s.k === "off") b = '<span class="ls-badge off">' + esc(s.label) + "</span>";
+    else b = '<span class="ls-badge pre">ยังไม่เตะ</span>';
+    return '<div class="ls-mid">' + mid + b + "</div>";
   }
-  function eventsLine(m, side) {
-    var tid = m[side].id, goals = {}, order = [], reds = [];
+  function sideEvents(m, side) {
+    var tid = m[side].id, out = [];
     m.det.forEach(function (d) {
       if (d.team !== tid) return;
-      if (d.red) { reds.push(d); return; }
-      if (!goals[d.name]) { goals[d.name] = []; order.push(d.name); }
-      goals[d.name].push(d);
+      out.push('<li class="' + (d.red ? "red" : "goal") + '"><span class="ls-evi" aria-hidden="true">' + (d.red ? '<i class="ls-rc"></i>' : "⚽") + "</span>" +
+        '<span class="ls-evn">' + esc(d.name || "ไม่ระบุชื่อ") + "</span><b>" + esc(d.min) + "</b>" +
+        (d.pen ? '<em class="ls-tag" title="ยิงจุดโทษ">P</em>' : "") + (d.og ? '<em class="ls-tag og" title="ทำเข้าประตูตัวเอง">OG</em>' : "") + "</li>");
     });
-    var html = "";
-    if (order.length) html += '<span class="ls-goals">⚽ ' + order.map(function (n) {
-      return '<span class="ls-p">' + esc(n) + " " + goals[n].map(function (d) {
-        return esc(d.min) + (d.pen ? '<em class="ls-tag" title="ยิงจุดโทษ">P</em>' : "") + (d.og ? '<em class="ls-tag og" title="ทำเข้าประตูตัวเอง">OG</em>' : "");
-      }).join(", ") + "</span>";
-    }).join("") + "</span>";
-    if (reds.length) html += '<span class="ls-reds">' + reds.map(function (d) { return '<span class="ls-p"><i class="ls-rc" title="ใบแดง"></i>' + esc(d.name) + " " + esc(d.min) + "</span>"; }).join("") + "</span>";
-    return html ? '<div class="ls-ev">' + html + "</div>" : "";
+    return '<ul class="ls-evl ' + side + '">' + (out.join("") || '<li class="none">—</li>') + "</ul>";
   }
-  function teamRow(m, side) {
-    var t = m[side], showScore = m.st.k !== "pre" && t.score != null && t.score !== "";
-    var lose = m.st.k === "post" && m.home.score !== m.away.score && t.win === false;
-    return '<div class="ls-team' + (lose ? " lose" : "") + '">' + crest(t.logo, t.name, "ls-crest") +
-      '<span class="ls-tn" title="' + esc(t.name) + '">' + esc(t.name) + "</span>" +
-      '<b class="ls-sc">' + (showScore ? esc(t.score) + (t.so != null ? '<sup>(' + esc(t.so) + ")</sup>" : "") : "") + "</b>" + eventsLine(m, side) + "</div>";
+  function canExpand(m) { return m.st.k !== "pre" && (m.det.length || m.src === "espn" || m.noDet); }
+  function goalsTotal(m) { return (+m.home.score || 0) + (+m.away.score || 0); }
+  function detailHTML(m) {
+    var body;
+    if (m.noDet) body = '<p class="ls-dnote">แหล่งข้อมูลไทยลีก (TheSportsDB รุ่นฟรี) ไม่มีรายชื่อผู้ทำประตู</p>';
+    else if (m.det.length) body = '<div class="ls-dcols">' + sideEvents(m, "home") + sideEvents(m, "away") + "</div>";
+    else if (m.lazyMsg) body = '<p class="ls-dnote">' + esc(m.lazyMsg) + "</p>";
+    else if (m.src === "espn" && !m.hasDet && !m.lazy && goalsTotal(m) > 0) body = '<p class="ls-dnote">กำลังโหลดผู้ทำประตู…</p>';
+    else body = '<p class="ls-dnote">' + (goalsTotal(m) ? "ยังไม่มีรายชื่อผู้ทำประตู" : "ยังไม่มีประตูหรือใบแดง") + "</p>";
+    return '<div class="ls-detail">' + body + "</div>";
   }
-  function matchRow(m) {
-    var scored = (+m.home.score || 0) + (+m.away.score || 0) > 0;
-    var need = m.src === "espn" && !m.hasDet && (m.st.k !== "pre" && m.st.k !== "off") && scored && !m.lazy;
-    return '<div class="ls-match ' + m.st.k + '" data-id="' + esc(m.id) + '"><div class="ls-st">' + badge(m) + "</div>" +
-      '<div class="ls-teams">' + teamRow(m, "home") + teamRow(m, "away") +
-      (need ? '<button class="ls-more" type="button" data-more="' + esc(m.id) + '">ดูผู้ทำประตู/ใบแดง</button>' : "") +
-      (m.lazyMsg ? '<div class="ls-note-sm">' + esc(m.lazyMsg) + "</div>" : "") + "</div></div>";
+  function redCount(m, side) { var tid = m[side].id; return m.det.filter(function (d) { return d.red && d.team === tid; }).length; }
+  function teamCell(m, side) {
+    var t = m[side], lose = m.st.k === "post" && m.home.score !== m.away.score && t.win === false, rc = redCount(m, side);
+    return '<span class="ls-side ' + side + (lose ? " lose" : "") + '">' + crest(t.logo, t.name, "ls-crest") +
+      '<span class="ls-tn" title="' + esc(t.name) + '">' + esc(t.short || t.name) + "</span>" +
+      (rc ? '<i class="ls-rc" title="ใบแดง ' + rc + '"></i>' : "") + "</span>";
+  }
+  function matchRow(m, ctx) {
+    var ex = canExpand(m), open = ex && !!S.exp[m.id];
+    var sub = ctx ? '<span class="ls-ctx">' + crest(m.lg.logo, m.lg.en, "ls-lc") + esc(lgName(m.lg)) + "</span>" : "";
+    return '<div class="ls-match ' + m.st.k + (open ? " open" : "") + '" data-id="' + esc(m.id) + '">' + sub +
+      (ex ? '<button class="ls-row" type="button" aria-expanded="' + open + '" data-x="' + esc(m.id) + '">' : '<div class="ls-row">') +
+      teamCell(m, "home") + centre(m) + teamCell(m, "away") +
+      (ex ? '<span class="ls-chev" aria-hidden="true"></span></button>' : "</div>") +
+      (open ? detailHTML(m) : "") + "</div>";
   }
   function matchesFilter(m) {
-    if (S.filter === "live" && !(m.st.k === "live" || m.st.k === "break")) return false;
+    if (S.filter === "live" && !isLive(m)) return false;
     if (S.filter === "pop" && PIN_IDX[m.lg.key] == null) return false;
     if (S.filter === "ft" && m.st.k !== "post") return false;
+    if (S.filter === "pre" && m.st.k !== "pre") return false;
     if (S.league && m.lg.key !== S.league) return false;
     if (S.q) {
       var hay = (m.home.name + " " + m.away.name + " " + m.lg.en + " " + lgName(m.lg)).toLowerCase();
@@ -268,7 +270,7 @@
     list.forEach(function (m) {
       var k = m.lg.key;
       if (!g[k]) { g[k] = { key: k, en: m.lg.en, logo: m.lg.logo, ms: [], live: 0 }; arr.push(g[k]); }
-      g[k].ms.push(m); if (m.st.k === "live" || m.st.k === "break") g[k].live = 1;
+      g[k].ms.push(m); if (isLive(m)) g[k].live++;
       if (!g[k].logo && m.lg.logo) g[k].logo = m.lg.logo;
     });
     arr.forEach(function (x) { x.ms.sort(function (a, b) { return a.t - b.t || a.home.name.localeCompare(b.home.name); }); });
@@ -276,60 +278,93 @@
   }
   function isOpen(gr) {
     if (S.open[gr.key] != null) return S.open[gr.key];
-    return PIN_IDX[gr.key] != null || gr.live || !!S.league || !!S.q || S.filter === "live";
+    return PIN_IDX[gr.key] != null || !!gr.live || !!S.league || !!S.q || S.filter === "live";
+  }
+  function leagueView(list) {
+    return buildGroups(list).map(function (gr) {
+      var open = isOpen(gr), th = TH_NAME[gr.key], cty = lgCountry(gr.key);
+      return '<section class="ls-group' + (open ? " open" : "") + '" data-g="' + esc(gr.key) + '">' +
+        '<button class="ls-ghead" type="button" aria-expanded="' + open + '">' + crest(gr.logo, gr.en, "ls-glogo") +
+        '<span class="ls-gname"><b>' + esc(th || gr.en) + "</b><small>" + esc([cty, th ? gr.en : ""].filter(Boolean).join(" · ") || "ฟุตบอล") + "</small></span>" +
+        (gr.live ? '<span class="ls-gl"><i></i>' + gr.live + "</span>" : "") + '<span class="ls-gc">' + gr.ms.length + '</span><span class="ls-gchev" aria-hidden="true"></span></button>' +
+        (open ? '<div class="ls-gbody">' + gr.ms.map(function (m) { return matchRow(m, false); }).join("") + "</div>" : "") + "</section>";
+    }).join("");
+  }
+  var TEAM_PAGE = 40;
+  function teamView(list) {
+    var rows = [];
+    list.forEach(function (m) { rows.push({ t: m.home, m: m }); rows.push({ t: m.away, m: m }); });
+    var lq = S.q;
+    if (lq) rows = rows.filter(function (r) { return r.t.name.toLowerCase().indexOf(lq) >= 0 || lgName(r.m.lg).toLowerCase().indexOf(lq) >= 0 || r.m.lg.en.toLowerCase().indexOf(lq) >= 0; });
+    rows.sort(function (a, b) { return (isLive(b.m) - isLive(a.m)) || a.t.name.localeCompare(b.t.name); });
+    var lim = TEAM_PAGE * (S.more + 1), shown = rows.slice(0, lim), lastL = "";
+    var h = shown.map(function (r) {
+      var L = isLive(r.m) ? "LIVE" : (r.t.name.charAt(0).toUpperCase() || "#");
+      var hd = L !== lastL ? '<h4 class="ls-letter">' + (L === "LIVE" ? '<i class="dotl"></i>กำลังแข่ง' : esc(L)) + "</h4>" : ""; lastL = L;
+      return hd + '<section class="ls-group ls-tgroup open"><div class="ls-thead">' + crest(r.t.logo, r.t.name, "ls-glogo") +
+        '<span class="ls-gname"><b>' + esc(r.t.name) + "</b><small>" + esc(lgName(r.m.lg)) + "</small></span></div>" +
+        '<div class="ls-gbody">' + matchRow(r.m, false) + "</div></section>";
+    }).join("");
+    if (rows.length > lim) h += '<button class="ls-loadmore" type="button">แสดงเพิ่ม (' + (rows.length - lim) + " ทีม)</button>";
+    return h;
   }
 
   var els = {};
   function render() {
     var today = bkkDay(new Date());
-    els.days.forEach(function (b) { var v = b.getAttribute("data-day"); var d = addDays(today, +v); b.setAttribute("aria-pressed", String(d === S.day)); });
+    els.days.forEach(function (b) { var d = addDays(today, +b.getAttribute("data-day")); b.setAttribute("aria-pressed", String(d === S.day)); });
+    var dayIdx = [-1, 0, 1].map(function (n) { return addDays(today, n); }).indexOf(S.day);
+    els.seg.setAttribute("data-active", String(dayIdx));
     els.date.value = S.day;
-    els.dateLabel.textContent = longDate(S.day) + (S.day === today ? " (วันนี้)" : "");
-    $all(".ls-fchip", els.filters).forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-f") === S.filter)); });
+    els.calTxt.textContent = shortDate(S.day);
+    els.cal.classList.toggle("on", dayIdx < 0);
+    els.dateLabel.textContent = longDate(S.day) + (S.day === today ? " · วันนี้" : "");
+    var cnt = { all: S.events.length, live: 0, ft: 0, pre: 0, pop: 0 };
+    S.events.forEach(function (m) { if (isLive(m)) cnt.live++; if (m.st.k === "post") cnt.ft++; if (m.st.k === "pre") cnt.pre++; if (PIN_IDX[m.lg.key] != null) cnt.pop++; });
+    $all(".ls-fchip", els.filters).forEach(function (b) {
+      var f = b.getAttribute("data-f"); b.setAttribute("aria-pressed", String(f === S.filter));
+      var c = b.querySelector("small"); if (c) c.textContent = S.events.length ? cnt[f] : "";
+    });
+    $all(".ls-vbtn", root).forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-v") === S.view)); });
+    els.vseg.setAttribute("data-active", S.view === "team" ? "1" : "0");
 
     if (S.loading && !S.events.length) {
-      els.list.innerHTML = '<div class="ls-skel">' + new Array(5).join('<div class="ls-sk glass"><span></span><span></span><span></span></div>') + '</div><p class="ls-status">กำลังโหลดโปรแกรมและผลบอล…</p>';
+      els.list.innerHTML = '<div class="ls-skel">' + new Array(5).join('<div class="ls-sk"><span></span><span></span><span></span></div>') + '</div><p class="ls-status">กำลังโหลดโปรแกรมและผลบอล…</p>';
       els.meta.innerHTML = ""; els.leagues.innerHTML = "";
       return;
     }
     if (S.err && !S.events.length) {
-      els.list.innerHTML = '<div class="ls-error glass"><b>⚠️ ' + S.err + '</b><p>อาจเป็นเพราะอินเทอร์เน็ตหลุดหรือแหล่งข้อมูลขัดข้องชั่วคราว</p><button class="btn btn-neon ls-retry" type="button">ลองอีกครั้ง ↻</button></div>';
+      els.list.innerHTML = '<div class="ls-error"><b>⚠️ ' + S.err + '</b><p>อาจเป็นเพราะอินเทอร์เน็ตหลุดหรือแหล่งข้อมูลขัดข้องชั่วคราว</p><button class="btn btn-neon ls-retry" type="button">ลองอีกครั้ง ↻</button></div>';
       els.meta.innerHTML = ""; els.leagues.innerHTML = "";
       return;
     }
-    var live = S.events.filter(function (m) { return m.st.k === "live" || m.st.k === "break"; }).length;
     var allGroups = buildGroups(S.events);
-    els.meta.innerHTML = (live ? '<span class="ls-livecount"><i></i>กำลังแข่ง ' + live + " คู่</span>" : "") +
-      "<span>ทั้งหมด <b>" + S.events.length + "</b> คู่ · <b>" + allGroups.length + "</b> รายการ</span>" +
+    els.meta.innerHTML = "<span><b>" + S.events.length + "</b> คู่ · <b>" + allGroups.length + "</b> รายการ</span>" +
       (S.updated ? '<span class="ls-upd">อัปเดต ' + hhmm(S.updated) + " น." + (S.loading ? " · กำลังรีเฟรช…" : (timer ? " · รีเฟรชอัตโนมัติ" : "")) + "</span>" : "") +
-      '<button class="ls-refresh" type="button" aria-label="รีเฟรช">↻</button>';
-    els.leagues.innerHTML = '<button class="ls-lchip" type="button" data-lg="" aria-pressed="' + String(!S.league) + '">ทุกลีก</button>' + allGroups.map(function (gr) {
+      '<button class="ls-refresh" type="button" aria-label="รีเฟรช" title="รีเฟรช">↻</button>';
+    els.leagues.innerHTML = '<button class="ls-lchip" type="button" data-lg="" aria-pressed="' + String(!S.league) + '"><span class="ls-lc all" aria-hidden="true">🌐</span>ทุกลีก <small>' + S.events.length + "</small></button>" + allGroups.map(function (gr) {
       return '<button class="ls-lchip" type="button" data-lg="' + esc(gr.key) + '" aria-pressed="' + String(S.league === gr.key) + '">' +
-        crest(gr.logo, gr.en, "ls-lc") + esc(lgName(gr)) + " <small>" + gr.ms.length + "</small></button>";
+        crest(gr.logo, gr.en, "ls-lc") + '<span class="ls-lcn">' + esc(lgName(gr)) + "</span> <small>" + gr.ms.length + "</small></button>";
     }).join("");
 
-    var groups = buildGroups(S.events.filter(matchesFilter));
+    var list = S.events.filter(S.view === "team" ? function (m) { var q = S.q; S.q = ""; var ok = matchesFilter(m); S.q = q; return ok; } : matchesFilter);
     var warn = (S.warn ? '<p class="ls-warn">⚠️ ' + esc(S.warn) + "</p>" : "") + (S.err ? '<p class="ls-warn">⚠️ ' + S.err + "</p>" : "");
-    if (!groups.length) {
-      els.list.innerHTML = warn + '<div class="ls-empty glass">' + (S.events.length ? "ไม่พบคู่ที่ตรงกับตัวกรอง/คำค้นหา" : "ไม่มีโปรแกรมการแข่งขันในวันนี้จากแหล่งข้อมูล") + "</div>";
+    var body = list.length ? (S.view === "team" ? teamView(list) : leagueView(list)) : "";
+    if (!body) {
+      els.list.innerHTML = warn + '<div class="ls-empty">' + (S.events.length ? "ไม่พบคู่ที่ตรงกับตัวกรอง/คำค้นหา" : "ไม่มีโปรแกรมการแข่งขันในวันนี้จากแหล่งข้อมูล") + "</div>";
       return;
     }
-    els.list.innerHTML = warn + groups.map(function (gr) {
-      var open = isOpen(gr), th = TH_NAME[gr.key];
-      return '<section class="ls-group glass' + (open ? " open" : "") + '" data-g="' + esc(gr.key) + '">' +
-        '<button class="ls-ghead" type="button" aria-expanded="' + open + '">' + crest(gr.logo, gr.en, "ls-glogo") +
-        '<span class="ls-gname"><b>' + esc(th || gr.en) + "</b>" + (th ? "<small>" + esc(gr.en) + "</small>" : "") + "</span>" +
-        (gr.live ? '<span class="ls-gl"><i></i>LIVE</span>' : "") + '<span class="ls-gc">' + gr.ms.length + ' คู่</span><span class="ls-chev" aria-hidden="true"></span></button>' +
-        (open ? '<div class="ls-gbody">' + gr.ms.map(matchRow).join("") + "</div>" : "") + "</section>";
-    }).join("");
+    els.list.innerHTML = warn + body;
   }
   function $all(sel, el) { return Array.prototype.slice.call((el || document).querySelectorAll(sel)); }
+  var fmtShort = new Intl.DateTimeFormat("th-TH", { timeZone: "UTC", day: "numeric", month: "short" });
+  function shortDate(ymd) { var p = ymd.split("-"); return fmtShort.format(new Date(Date.UTC(+p[0], +p[1] - 1, +p[2], 12))); }
 
   /* lazy summary fetch for matches whose scoreboard row has no scorer details */
-  function loadMore(id, btn) {
+  function loadMore(id) {
     var m = S.events.filter(function (x) { return x.id === id; })[0];
-    if (!m) return;
-    btn.disabled = true; btn.textContent = "กำลังโหลด…";
+    if (!m || m.lazy || m.loadingDet) return;
+    m.loadingDet = true;
     fetchJSON(ESPN + "all/summary?event=" + encodeURIComponent(id), 15000).then(function (j) {
       var det = [];
       (j.keyEvents || []).forEach(function (k) {
@@ -340,34 +375,47 @@
         det.push({ team: k.team && k.team.id, name: p.shortName || p.displayName || "", min: (k.clock && k.clock.displayValue) || "",
           goal: goal && !red, pen: /penalty/i.test(txt), og: /own goal/i.test(txt), red: red });
       });
-      m.det = det; m.lazy = true; m.lazyMsg = det.length ? "" : "แหล่งข้อมูลยังไม่มีรายชื่อผู้ทำประตูของคู่นี้";
+      m.det = det; m.lazy = true; m.loadingDet = false; m.lazyMsg = det.length ? "" : "แหล่งข้อมูลยังไม่มีรายชื่อผู้ทำประตูของคู่นี้";
       render();
-    }, function () { btn.disabled = false; btn.textContent = "โหลดไม่สำเร็จ ลองอีกครั้ง"; });
+    }, function () { m.loadingDet = false; m.lazyMsg = "โหลดรายชื่อผู้ทำประตูไม่สำเร็จ แตะอีกครั้งเพื่อลองใหม่"; render(); m.lazyMsg = ""; });
   }
 
   /* ---------- build UI ---------- */
   root.innerHTML =
-    '<div class="ls-bar glass">' +
-      '<div class="ls-days" role="group" aria-label="เลือกวัน">' +
-        '<button class="ls-day" type="button" data-day="-1">เมื่อวาน</button>' +
-        '<button class="ls-day" type="button" data-day="0">วันนี้</button>' +
-        '<button class="ls-day" type="button" data-day="1">พรุ่งนี้</button>' +
-        '<label class="ls-cal" title="เลือกวันจากปฏิทิน"><span aria-hidden="true">📅</span><input type="date" id="lsDate" aria-label="เลือกวันที่"></label>' +
+    '<div class="ls-bar">' +
+      '<div class="ls-dayrow">' +
+        '<div class="ls-seg" role="group" aria-label="เลือกวัน" data-active="1"><span class="ls-glider" aria-hidden="true"></span>' +
+          '<button class="ls-day" type="button" data-day="-1">เมื่อวาน</button>' +
+          '<button class="ls-day" type="button" data-day="0">วันนี้</button>' +
+          '<button class="ls-day" type="button" data-day="1">พรุ่งนี้</button>' +
+        "</div>" +
+        '<label class="ls-cal" title="เลือกวันจากปฏิทิน"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>' +
+          '<span class="ls-caltxt"></span><input type="date" id="lsDate" aria-label="เลือกวันที่จากปฏิทิน"></label>' +
       "</div>" +
       '<p class="ls-dlabel" id="lsDateLabel"></p>' +
-      '<div class="ls-tools"><div class="ls-filters" role="group" aria-label="ตัวกรอง">' +
-        '<button class="ls-fchip" type="button" data-f="all">ทั้งหมด</button>' +
-        '<button class="ls-fchip" type="button" data-f="live"><i class="dot"></i>กำลังแข่ง</button>' +
-        '<button class="ls-fchip" type="button" data-f="pop">⭐ ลีกยอดนิยม</button>' +
-        '<button class="ls-fchip" type="button" data-f="ft">จบแล้ว</button>' +
-      '</div><label class="ls-search"><span aria-hidden="true">🔎</span><input type="search" id="lsSearch" placeholder="ค้นหาทีมหรือลีก เช่น Arsenal" autocomplete="off" enterkeyhint="search"></label></div>' +
-      '<div class="ls-leagues" id="lsLeagues" aria-label="เลือกลีก"></div>' +
-      '<div class="ls-meta" id="lsMeta" aria-live="polite"></div>' +
+      '<div class="ls-filters" role="group" aria-label="ตัวกรอง">' +
+        '<button class="ls-fchip" type="button" data-f="all">ทั้งหมด<small></small></button>' +
+        '<button class="ls-fchip" type="button" data-f="live"><i class="dot"></i>กำลังแข่ง<small></small></button>' +
+        '<button class="ls-fchip" type="button" data-f="pop">⭐ ยอดนิยม<small></small></button>' +
+        '<button class="ls-fchip" type="button" data-f="pre">ยังไม่เตะ<small></small></button>' +
+        '<button class="ls-fchip" type="button" data-f="ft">จบแล้ว<small></small></button>' +
+      "</div>" +
+      '<div class="ls-tools"><label class="ls-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg>' +
+        '<input type="search" id="lsSearch" placeholder="ค้นหาทีมหรือลีก" autocomplete="off" enterkeyhint="search" aria-label="ค้นหาทีมหรือลีก"></label>' +
+        '<div class="ls-vseg" role="group" aria-label="มุมมอง" data-active="0"><span class="ls-glider" aria-hidden="true"></span>' +
+          '<button class="ls-vbtn" type="button" data-v="league">ตามลีก</button><button class="ls-vbtn" type="button" data-v="team">ตามทีม</button></div>' +
+      "</div>" +
     "</div>" +
+    '<div class="ls-leagues" id="lsLeagues" aria-label="เลือกลีก"></div>' +
+    '<div class="ls-meta" id="lsMeta" aria-live="polite"></div>' +
     '<div class="ls-list" id="lsList"></div>' +
-    '<p class="ls-src">📡 ข้อมูลจาก <a href="https://www.espn.com/soccer/scoreboard" target="_blank" rel="noopener">ESPN</a> (ฟีดสาธารณะ) และ <a href="https://www.thesportsdb.com/" target="_blank" rel="noopener">TheSportsDB</a> สำหรับไทยลีก · เวลาเป็นเวลาประเทศไทย · ' +
-    "ผลอาจช้ากว่าจริงประมาณ 1–2 นาที ไทยลีกอัปเดตช้ากว่าและไม่มีรายชื่อผู้ทำประตู · P = จุดโทษ, OG = ทำเข้าประตูตัวเอง, <i class=\"ls-rc\"></i> = ใบแดง · ไม่ใช่ข้อมูลทางการของลีก</p>";
+    '<p class="ls-src">📡 ข้อมูลจาก <a href="https://www.espn.com/soccer/scoreboard" target="_blank" rel="noopener">ESPN</a> (ฟีดสาธารณะ) และ <a href="https://www.thesportsdb.com/" target="_blank" rel="noopener">TheSportsDB</a> สำหรับไทยลีก · เวลาประเทศไทย · ' +
+    "ผลอาจช้ากว่าจริงประมาณ 1–2 นาที ไทยลีกอัปเดตช้ากว่าและไม่มีรายชื่อผู้ทำประตู · แตะคู่แข่งขันเพื่อดูผู้ทำประตู · P = จุดโทษ, OG = ทำเข้าประตูตัวเอง, <i class=\"ls-rc\"></i> = ใบแดง · ไม่ใช่ข้อมูลทางการของลีก</p>";
   els.days = $all(".ls-day", root);
+  els.seg = root.querySelector(".ls-seg");
+  els.vseg = root.querySelector(".ls-vseg");
+  els.cal = root.querySelector(".ls-cal");
+  els.calTxt = root.querySelector(".ls-caltxt");
   els.date = root.querySelector("#lsDate");
   els.dateLabel = root.querySelector("#lsDateLabel");
   els.filters = root.querySelector(".ls-filters");
@@ -376,27 +424,33 @@
   els.list = root.querySelector("#lsList");
   var search = root.querySelector("#lsSearch");
 
-  function setDay(d) { if (!d || d === S.day) return; S.day = d; S.events = []; S.league = ""; S.open = {}; S.updated = null; clearTimeout(timer); timer = null; load("day"); }
+  function setDay(d) { if (!d || d === S.day) return; S.day = d; S.events = []; S.league = ""; S.open = {}; S.exp = {}; S.more = 0; S.updated = null; clearTimeout(timer); timer = null; load("day"); }
   els.days.forEach(function (b) { b.addEventListener("click", function () { setDay(addDays(bkkDay(new Date()), +b.getAttribute("data-day"))); }); });
   els.date.addEventListener("change", function () { if (/^\d{4}-\d{2}-\d{2}$/.test(els.date.value)) setDay(els.date.value); });
-  els.filters.addEventListener("click", function (e) { var b = e.target.closest(".ls-fchip"); if (!b) return; S.filter = b.getAttribute("data-f"); render(); });
-  els.leagues.addEventListener("click", function (e) { var b = e.target.closest(".ls-lchip"); if (!b) return; S.league = b.getAttribute("data-lg"); render(); });
-  var qT; search.addEventListener("input", function () { clearTimeout(qT); qT = setTimeout(function () { S.q = search.value.trim().toLowerCase(); render(); }, 180); });
+  els.date.addEventListener("click", function () { try { if (els.date.showPicker) els.date.showPicker(); } catch (e) {} });
+  els.filters.addEventListener("click", function (e) { var b = e.target.closest(".ls-fchip"); if (!b) return; S.filter = b.getAttribute("data-f"); S.more = 0; render(); });
+  els.leagues.addEventListener("click", function (e) {
+    var b = e.target.closest(".ls-lchip"); if (!b) return; S.league = b.getAttribute("data-lg"); S.more = 0; render();
+    var on = els.leagues.querySelector('[aria-pressed="true"]'); if (on && on.scrollIntoView) on.scrollIntoView({ block: "nearest", inline: "center" });
+  });
+  var qT; search.addEventListener("input", function () { clearTimeout(qT); qT = setTimeout(function () { S.q = search.value.trim().toLowerCase(); S.more = 0; render(); }, 180); });
   root.addEventListener("click", function (e) {
+    var v = e.target.closest(".ls-vbtn"); if (v) { S.view = v.getAttribute("data-v"); S.more = 0; render(); return; }
     var h = e.target.closest(".ls-ghead");
     if (h) { var g = h.parentNode.getAttribute("data-g"), gr = buildGroups(S.events.filter(function (m) { return m.lg.key === g; }))[0]; S.open[g] = !(gr && isOpen(gr)); render(); return; }
-    var mb = e.target.closest(".ls-more"); if (mb) { loadMore(mb.getAttribute("data-more"), mb); return; }
+    var x = e.target.closest(".ls-row[data-x]");
+    if (x) {
+      var id = x.getAttribute("data-x"); S.exp[id] = !S.exp[id];
+      var m = S.events.filter(function (y) { return y.id === id; })[0];
+      if (S.exp[id] && m && m.src === "espn" && !m.hasDet && !m.lazy && goalsTotal(m) > 0) loadMore(id);
+      render(); return;
+    }
+    if (e.target.closest(".ls-loadmore")) { S.more++; render(); return; }
     if (e.target.closest(".ls-refresh")) { load(true); return; }
     if (e.target.closest(".ls-retry")) { load(true); }
   });
 
-  /* start fetching only when the section is near the viewport (saves data for visitors who never scroll here) */
   function start() { if (started) return; started = true; load(false); }
-  if (location.hash === "#live" || !("IntersectionObserver" in window)) start();
-  else {
-    var io = new IntersectionObserver(function (ents) { if (ents.some(function (x) { return x.isIntersecting; })) { io.disconnect(); start(); } }, { rootMargin: "600px 0px" });
-    io.observe(root);
-  }
-  window.addEventListener("hashchange", function () { if (location.hash === "#live") start(); });
   render();
+  start();
 })();
