@@ -26,7 +26,7 @@
     ["ksa.1", "ซาอุดี โปรลีก"], ["jpn.1", "เจลีก ญี่ปุ่น"], ["ned.1", "เอเรดิวิซี เนเธอร์แลนด์"],
     ["por.1", "ลีกา โปรตุเกส"], ["sco.1", "สกอตติช พรีเมียร์ชิป"], ["tur.1", "ซูเปอร์ลีก ตุรกี"],
     ["esp.copa_del_rey", "โกปาเดลเรย์ สเปน"], ["ita.coppa_italia", "โกปปาอิตาเลีย"], ["ger.dfb_pokal", "เดเอฟเบ โพคาล เยอรมนี"],
-    ["fra.coupe_de_france", "คูปเดอฟร็องส์"], ["usa.1", "เอ็มแอลเอส สหรัฐฯ"], ["conmebol.libertadores", "โกปาลิเบร์ตาโดเรส"],
+    ["fra.coupe_de_france", "คูปเดอฟร็องส์"], ["usa.1", "เอ็มแอลเอส สหรัฐฯ"], ["concacaf.nations.league", "คอนคาเคฟ เนชันส์ลีก"], ["conmebol.libertadores", "โกปาลิเบร์ตาโดเรส"],
     ["bra.1", "บราซิล เซเรียอา"], ["arg.1", "ลีกสูงสุด อาร์เจนตินา"], ["aus.1", "เอลีก ออสเตรเลีย"], ["chn.1", "ไชนีสซูเปอร์ลีก"]
   ];
   var PIN_IDX = {}, TH_NAME = {};
@@ -214,7 +214,7 @@
   }
   function badge(m) {
     var s = m.st;
-    if (s.k === "live") return '<span class="ls-badge live"><i></i>LIVE' + (s.clock ? " " + esc(s.clock) : "") + '</span><small>' + esc(s.label) + "</small>";
+    if (s.k === "live") return '<span class="ls-badge live"><i></i>LIVE</span>' + (s.clock ? '<b class="ls-min">' + esc(s.clock) + "</b>" : "") + "<small>" + esc(s.label) + "</small>";
     if (s.k === "break") return '<span class="ls-badge brk">' + esc(s.label) + "</span>";
     if (s.k === "post") return '<span class="ls-badge ft">' + esc(s.label) + "</span>";
     if (s.k === "off") return '<span class="ls-badge off">' + esc(s.label) + "</span><small>" + hhmm(m.t) + " น.</small>";

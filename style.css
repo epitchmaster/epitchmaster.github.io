@@ -721,3 +721,5 @@ body.rp-open{overflow:hidden}
   .ls-ghead{padding:11px 12px}
 }
 @media (prefers-reduced-motion:reduce){.nav-live i,.live-pill i,.ls-badge.live i,.ls-livecount i,.ls-gl i,.ls-fchip .dot,.ls-sk span{animation:none}}
+.ls-min{font-family:var(--font-h);font-size:1.02rem;font-weight:700;color:var(--neon);line-height:1.1;white-space:nowrap}
+.ls-match{grid-template-columns:minmax(64px,auto) 1fr}
