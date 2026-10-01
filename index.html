@@ -33,6 +33,7 @@
       <a href="#tactics">แผน & แท็กติก</a>
       <a href="#development">พัฒนานักเตะ</a>
       <a href="#news">ข่าว</a>
+      <a href="#live" class="nav-live"><i aria-hidden="true"></i>ผลบอลสด</a>
     </nav>
     <div class="pf-toggle" role="group" aria-label="เลือกแพลตฟอร์ม">
       <button class="pf-btn" data-set-platform="console" aria-pressed="true">🎮 <span>Console</span></button>
@@ -372,6 +373,18 @@
     </div>
   </div>
 </section>
+
+<!-- ============ LIVE SCORES ============ -->
+<section class="section section-alt" id="live">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="sec-num">08</span>
+      <div><h2>ผลบอลสด <span class="live-pill"><i></i>LIVE</span></h2>
+      <p>โปรแกรมและผลฟุตบอลจริงทุกลีกที่มีข้อมูล แยกตามลีก <b>เวลาไทย</b> พร้อมผู้ทำประตูและใบแดงแบบเรียลไทม์ รีเฟรชเองทุก 45 วินาทีระหว่างมีคู่กำลังแข่ง</p></div>
+    </div>
+    <div class="livescore" id="liveScore"><noscript>ต้องเปิด JavaScript เพื่อดูผลบอลสด</noscript></div>
+  </div>
+</section>
 </main>
 
 <!-- ============ FOOTER / SOURCES ============ -->
@@ -424,5 +437,6 @@
 
 <script src="data.js"></script>
 <script src="script.js"></script>
+<script src="livescore.js"></script>
 </body>
 </html>
