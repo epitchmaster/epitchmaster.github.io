@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<!-- ไฟล์นี้สร้างอัตโนมัติด้วย /workspace/build.py จาก src/layout.html + src/pages/players.html — อย่าแก้ไฟล์นี้โดยตรง -->
+<!-- ไฟล์นี้สร้างอัตโนมัติด้วย /workspace/build.py จาก src/layout.html + src/pages/coins.html — อย่าแก้ไฟล์นี้โดยตรง -->
 <html lang="th">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>พัฒนานักเตะ (Progression) — ePitch Master</title>
-<meta name="description" content="หลักการพัฒนานักเตะ eFootball (Progression Points) และการเลือกนักเตะให้คุ้มค่า">
+<title>เทียบราคาเหรียญ eFootball Coin (บาท) — ePitch Master</title>
+<meta name="description" content="เทียบราคา eFootball Coin เป็นเงินบาท: PlayStation Store, เว็บสโตร์ (Coda) iOS/Android/Steam และ App Store พร้อมบาทต่อ 100 เหรียญและโปรล่าสุด">
 <meta name="theme-color" content="#050b1f">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚽</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,7 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700;800&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css?v=745e58e3">
 </head>
-<body data-page="players">
+<body data-page="coins">
 <a class="skip" href="#main">ข้ามไปเนื้อหา</a>
 <div class="scroll-progress" id="scrollProgress"></div>
 
@@ -25,13 +25,13 @@
       </span>
       <span class="brand-text"><span class="bt1">ePitch <b>Master</b></span><small>สนามแห่งเซียน</small></span>
     </a>
-    <span class="nav-cur" aria-hidden="true">🧬 พัฒนานักเตะ</span>
+    <span class="nav-cur" aria-hidden="true">💰 เทียบราคาเหรียญ</span>
     <button class="burger" id="burger" type="button" aria-label="เปิดเมนู" aria-expanded="false" aria-controls="navMenu"><span></span><span></span><span></span><em>เมนู</em></button>
   </div>
 </header>
 <div class="menu-backdrop" id="menuBackdrop"></div>
 <nav class="menu" id="navMenu" aria-label="เมนูหลัก">
-  <div class="menu-group menu-topup"><a class="m-item m-topup" href="https://efootball.codashop.com/international" target="_blank" rel="noopener"><span class="m-ic" aria-hidden="true">🪙</span><span class="m-tx"><b>เติม eFootball Coin</b><small>eFootball™ Web Store · Codashop</small></span><span class="m-ext" aria-hidden="true">↗</span></a><a class="m-item m-coins" href="coins.html"><span class="m-ic" aria-hidden="true">💰</span><span class="m-tx"><b>เทียบราคาเหรียญ</b><small>PS · มือถือ · Steam · โปรล่าสุด</small></span></a></div>
+  <div class="menu-group menu-topup"><a class="m-item m-topup" href="https://efootball.codashop.com/international" target="_blank" rel="noopener"><span class="m-ic" aria-hidden="true">🪙</span><span class="m-tx"><b>เติม eFootball Coin</b><small>eFootball™ Web Store · Codashop</small></span><span class="m-ext" aria-hidden="true">↗</span></a><a class="m-item m-coins is-current" href="coins.html" aria-current="page"><span class="m-ic" aria-hidden="true">💰</span><span class="m-tx"><b>เทียบราคาเหรียญ</b><small>PS · มือถือ · Steam · โปรล่าสุด</small></span></a></div>
   <div class="menu-group"><p class="menu-gh">ปุ่มควบคุม</p>
     <a class="m-item" href="ps5.html"><span class="m-ic" aria-hidden="true">🎮</span><span class="m-tx"><b>PS5</b><small>ปุ่มจอย DualSense · เทคนิค · สกิล</small></span></a>
     <a class="m-item" href="xbox.html"><span class="m-ic" aria-hidden="true">🟢</span><span class="m-tx"><b>Xbox</b><small>ปุ่มจอย Xbox · เทคนิค · สกิล</small></span></a>
@@ -41,7 +41,7 @@
   <div class="menu-group"><p class="menu-gh">เล่นให้เก่ง</p>
     <a class="m-item" href="tactics.html"><span class="m-ic" aria-hidden="true">🧠</span><span class="m-tx"><b>แผน &amp; แท็กติก</b><small>19 แผน · Fluid Formation · คำสั่ง</small></span></a>
     <a class="m-item" href="skills.html"><span class="m-ic" aria-hidden="true">🌀</span><span class="m-tx"><b>สกิลเลี้ยงบอล</b><small>ท่าหลอก · รับบอล · ยิง · ส่ง</small></span></a>
-    <a class="m-item is-current" href="players.html" aria-current="page"><span class="m-ic" aria-hidden="true">🧬</span><span class="m-tx"><b>พัฒนานักเตะ</b><small>Progression · ความคุ้มค่า</small></span></a>
+    <a class="m-item" href="players.html"><span class="m-ic" aria-hidden="true">🧬</span><span class="m-tx"><b>พัฒนานักเตะ</b><small>Progression · ความคุ้มค่า</small></span></a>
   </div>
   <div class="menu-group"><p class="menu-gh">ติดตาม</p>
     <a class="m-item m-live" href="scores.html"><span class="m-ic" aria-hidden="true">🔴</span><span class="m-tx"><b>ผลบอลสด</b><small>โปรแกรม · ผลสด · ผู้ทำประตู</small></span><i class="nav-live-dot" aria-hidden="true"></i></a>
@@ -55,28 +55,47 @@
 
 <main id="main">
 <section class="page-hero slim">
-  <div class="container"><h1 class="ph-title reveal">🧬 พัฒนานักเตะ</h1></div>
-</section>
-<section class="section first" id="development">
   <div class="container">
-    <div class="glass card reveal">
-      <h3>🧬 10 หมวดของ Progression Points</h3>
-      <div class="cat-chips" id="progCats"></div>
-      <p class="footnote" id="progCatsNote"></p>
+    <h1 class="ph-title reveal">💰 เทียบราคาเหรียญ eFootball Coin</h1>
+    <p class="cn-sub reveal">ราคาแพ็กเหรียญเป็นเงินบาท แยกตามแพลตฟอร์ม พร้อมบาทต่อ 100 เหรียญ · <span class="cn-checked" id="coinChecked"></span></p>
+    <nav class="cn-jump reveal" aria-label="ไปยังหัวข้อ"><a href="#prices">💰 ราคา</a><a href="#promo">🎁 โปร</a><a href="#safety">🛡️ ความปลอดภัย</a><a href="#sources">🔗 แหล่งราคา</a></nav>
+  </div>
+</section>
+<section class="section first cn-page" id="coins">
+  <div class="container">
+    <div class="cn-lock glass reveal" id="coinLock">
+      <h2>🔒 เหรียญใช้ได้เฉพาะแพลตฟอร์มที่ซื้อ</h2>
+      <ul>
+        <li>เว็บสโตร์ eFootball™ (Coda) ขายแพ็กแยกเป็น <b>iOS</b> · <b>Android</b> · <b>Steam</b> เท่านั้น ไม่มีแพ็กสำหรับ PlayStation หรือ Xbox</li>
+        <li><b>ผู้เล่น PS5 / PS4 ต้องซื้อผ่าน PlayStation Store</b> (หรือร้านในเกมบนเครื่อง)</li>
+        <li>ยังไม่พบเอกสารของ KONAMI ที่อนุญาตให้โอนเหรียญข้ามแพลตฟอร์ม และร้านแยกแพ็กตามแพลตฟอร์ม — เลือกแพ็กให้ตรงกับเครื่องที่เล่นทุกครั้ง</li>
+      </ul>
     </div>
-    <div class="grid-2 tight">
-      <div class="table-block reveal">
-        <h3 class="tb-title atk">📍 ลำดับความสำคัญตามตำแหน่ง</h3>
-        <div class="table-wrap"><table class="ctrl prog" id="progTable"></table></div>
-        <p class="footnote" id="progTableNote"></p>
-      </div>
-      <div>
-        <h3 class="sub-title reveal mt0">🧠 หลักการลงแต้ม</h3>
-        <div class="stack" id="progPrinciples"></div>
-      </div>
+
+    <div class="cn-block" id="prices">
+      <h2 class="cn-h reveal">💰 ราคาแพ็กเหรียญ</h2>
+      <div class="cn-tabs" role="tablist" aria-label="เลือกแพลตฟอร์ม" id="coinTabs"></div>
+      <div id="coinPanel" role="tabpanel"></div>
     </div>
-    <h3 class="sub-title reveal">💰 เลือกนักเตะให้คุ้มค่า</h3>
-    <div class="grid-3 snap" id="valueTips"></div>
+
+    <div class="cn-block" id="promo">
+      <h2 class="cn-h reveal">🎁 โปรเหรียญตอนนี้</h2>
+      <div id="coinSale"></div>
+      <div class="cn-promos" id="coinPromos"></div>
+      <details class="cn-hist glass" id="coinHistWrap"><summary>🕘 โปรที่จบแล้ว <span id="coinHistN"></span></summary><ul id="coinHist"></ul></details>
+    </div>
+
+    <div class="cn-safe glass reveal" id="safety">
+      <h2>🛡️ ระวังร้านที่ขอรหัสผ่าน KONAMI ID</h2>
+      <p>บางเว็บขาย Coin แบบ “ID-PASS” โดยขออีเมลและ <b>รหัสผ่าน KONAMI ID</b> เพื่อเข้าไปเติมให้ — เสี่ยงโดนยึดบัญชีหรือเสียนักเตะ ร้านทางการให้คุณล็อกอิน KONAMI ID ด้วยตัวเอง ไม่ต้องส่งรหัสผ่านให้ใคร</p>
+      <p>ถ้าเคยให้รหัสผ่านไปแล้ว ให้เปลี่ยนรหัสผ่านที่ My KONAMI ทันที</p>
+    </div>
+
+    <div class="cn-src" id="sources">
+      <h2 class="cn-h">🔗 แหล่งราคา</h2>
+      <ul id="coinSources"></ul>
+      <p class="cn-fine">ราคาเช็กจากหน้าร้านจริงตามเวลาที่ระบุ อาจเปลี่ยนได้ทุกเมื่อ ตรวจราคาและจำนวน Coin ที่ร้านอีกครั้งก่อนจ่าย · ลิงก์ตรง ไม่มีโค้ดแนะนำหรือค่าคอมมิชชัน</p>
+    </div>
   </div>
 </section>
 </main>
@@ -127,7 +146,7 @@
 <button class="to-top" id="toTop" type="button" aria-label="กลับขึ้นด้านบน">↑</button>
 
 <script src="data/site.js?v=a6ce8e96"></script>
-<script src="data/players.js?v=6b03f9fd"></script>
+<script src="data/coins.js?v=664919f1"></script>
 <script src="script.js?v=970c89af"></script>
 </body>
 </html>

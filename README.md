@@ -18,8 +18,9 @@
 | `skills.html` | สกิลเลี้ยงบอล | `data/skills.js` |
 | `players.html` | พัฒนานักเตะ | `data/players.js` |
 | `news.html` | ข่าว & อีเวนต์ | `data/news.js` |
+| `coins.html` | เทียบราคาเหรียญ / โปร (ประกาศบนหน้าแรกด้วย) | `data/coins.js` |
 | `about.html` | แพลตฟอร์ม · โหมด · แหล่งข้อมูล | `data/about.js` |
 
 ทุกหน้าโหลด `data/site.js` (เวอร์ชันเกม), `style.css` และ `script.js` ร่วมกัน
 
-ไฟล์ `*.html` สร้างอัตโนมัติจากต้นฉบับ (layout + เนื้อหาแต่ละหน้า) — ข่าวประจำวันแก้ที่ `data/news.js`
+ไฟล์ `*.html` สร้างอัตโนมัติจากต้นฉบับ (layout + เนื้อหาแต่ละหน้า) — ข่าวประจำวันแก้ที่ `data/news.js` · ราคา/โปรเหรียญแก้ที่ `data/coins.js` (มีคำอธิบายฟิลด์ที่หัวไฟล์)

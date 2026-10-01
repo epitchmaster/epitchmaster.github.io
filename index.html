@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700;800&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=f08d4e9c">
+<link rel="stylesheet" href="style.css?v=745e58e3">
 <script>/* ลิงก์เก่าแบบ #anchor ของเว็บหน้าเดียว → หน้าใหม่ */(function(){var m={"#console":"ps5.html","#btnGlossary":"ps5.html#glossary","#mobile":"mobile.html","#remote":"mobile.html#remote","#techniques":"ps5.html#techniques","#tactics":"tactics.html","#development":"players.html","#news":"news.html","#live":"scores.html","#overview":"about.html","#sources":"about.html#sources","#report":"index.html?report"};var h=location.hash,t=m[h];if(!t&&/platform=mobile/.test(location.search))t="mobile.html";if(t)location.replace(t);})();</script>
 </head>
 <body data-page="index">
@@ -32,7 +32,7 @@
 </header>
 <div class="menu-backdrop" id="menuBackdrop"></div>
 <nav class="menu" id="navMenu" aria-label="เมนูหลัก">
-  <div class="menu-group menu-topup"><a class="m-item m-topup" href="https://efootball.codashop.com/international" target="_blank" rel="noopener"><span class="m-ic" aria-hidden="true">🪙</span><span class="m-tx"><b>เติม eFootball Coin</b><small>eFootball™ Web Store · Codashop</small></span><span class="m-ext" aria-hidden="true">↗</span></a></div>
+  <div class="menu-group menu-topup"><a class="m-item m-topup" href="https://efootball.codashop.com/international" target="_blank" rel="noopener"><span class="m-ic" aria-hidden="true">🪙</span><span class="m-tx"><b>เติม eFootball Coin</b><small>eFootball™ Web Store · Codashop</small></span><span class="m-ext" aria-hidden="true">↗</span></a><a class="m-item m-coins" href="coins.html"><span class="m-ic" aria-hidden="true">💰</span><span class="m-tx"><b>เทียบราคาเหรียญ</b><small>PS · มือถือ · Steam · โปรล่าสุด</small></span></a></div>
   <div class="menu-group"><p class="menu-gh">ปุ่มควบคุม</p>
     <a class="m-item" href="ps5.html"><span class="m-ic" aria-hidden="true">🎮</span><span class="m-tx"><b>PS5</b><small>ปุ่มจอย DualSense · เทคนิค · สกิล</small></span></a>
     <a class="m-item" href="xbox.html"><span class="m-ic" aria-hidden="true">🟢</span><span class="m-tx"><b>Xbox</b><small>ปุ่มจอย Xbox · เทคนิค · สกิล</small></span></a>
@@ -87,6 +87,7 @@
       <span class="eyebrow"><span class="live-dot"></span> <span data-version></span></span>
       <h1 class="hero-title"><span class="t1">ePitch Master</span><span class="t2">สนามแห่งเซียน</span></h1>
       <p class="hero-sub">คู่มือ eFootball™ ภาษาไทย แยกตามแพลตฟอร์ม — เลือกหัวข้อจากเมนูด้านล่าง</p>
+      <a class="coin-notice" id="coinNotice" href="coins.html#promo" hidden></a>
     </div>
   </div>
 </section>
@@ -123,7 +124,7 @@
           <li>เปิดร้าน เลือกประเทศ แล้วล็อกอินด้วย KONAMI ID ที่ผูกกับเกม</li>
           <li>ตรวจบัญชี จำนวน Coin และราคาให้ถูกก่อนจ่ายทุกครั้ง</li>
         </ol>
-        <a class="btn btn-neon tp-btn" href="https://efootball.codashop.com/international" target="_blank" rel="noopener">ไปที่ร้านเติม Coin ↗</a>
+        <div class="tp-acts"><a class="btn btn-neon tp-btn" href="https://efootball.codashop.com/international" target="_blank" rel="noopener">ไปที่ร้านเติม Coin ↗</a><a class="btn tp-cmp" href="coins.html">💰 เทียบราคาเหรียญ →</a></div>
         <p class="tp-note">ลิงก์ตรงไปยังร้าน ไม่มีโค้ดแนะนำหรือค่าคอมมิชชัน · ร้านแจ้งว่าไม่รับผิดชอบหากกรอกบัญชีผิด</p>
       </div>
     </div>
@@ -137,7 +138,7 @@
       <div class="brand big"><span class="brand-text"><span class="bt1">ePitch <b>Master</b></span><small>สนามแห่งเซียน</small></span></div>
       <p class="foot-desc">เว็บไซต์คู่มือโดยแฟนเกม ไม่ใช่เว็บไซต์ทางการของ KONAMI · ไม่มีโลโก้หรือภาพลิขสิทธิ์ของเกม (ใช้ CSS / SVG / อีโมจิ) · eFootball™ เป็นเครื่องหมายการค้าของ KONAMI · PlayStation, PS5, DualSense เป็นเครื่องหมายการค้าของ Sony Interactive Entertainment · Xbox เป็นเครื่องหมายการค้าของ Microsoft</p>
     </div>
-    <nav class="foot-links" aria-label="ลิงก์ท้ายเว็บ"><a href="index.html">หน้าแรก</a> <a href="ps5.html">PS5</a> <a href="xbox.html">Xbox</a> <a href="pc.html">PC</a> <a href="mobile.html">มือถือ</a> <a href="scores.html">ผลบอลสด</a> <a href="tactics.html">แผน &amp; แท็กติก</a> <a href="skills.html">สกิลเลี้ยงบอล</a> <a href="players.html">พัฒนานักเตะ</a> <a href="news.html">ข่าว</a> <a href="about.html">เกี่ยวกับเกม</a></nav>
+    <nav class="foot-links" aria-label="ลิงก์ท้ายเว็บ"><a href="index.html">หน้าแรก</a> <a href="ps5.html">PS5</a> <a href="xbox.html">Xbox</a> <a href="pc.html">PC</a> <a href="mobile.html">มือถือ</a> <a href="scores.html">ผลบอลสด</a> <a href="tactics.html">แผน &amp; แท็กติก</a> <a href="skills.html">สกิลเลี้ยงบอล</a> <a href="players.html">พัฒนานักเตะ</a> <a href="news.html">ข่าว</a> <a href="coins.html">เทียบราคาเหรียญ</a> <a href="about.html">เกี่ยวกับเกม</a></nav>
     <p class="foot-small" id="footVersion">ปุ่มและเมตาอาจเปลี่ยนหลังแพตช์ — ตรวจ Command List ในเกมเสมอ</p>
   </div>
 </footer>
@@ -177,6 +178,7 @@
 <button class="to-top" id="toTop" type="button" aria-label="กลับขึ้นด้านบน">↑</button>
 
 <script src="data/site.js?v=a6ce8e96"></script>
-<script src="script.js?v=e79c5dde"></script>
+<script src="data/coins.js?v=664919f1"></script>
+<script src="script.js?v=970c89af"></script>
 </body>
 </html>

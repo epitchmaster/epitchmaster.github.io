@@ -339,6 +339,102 @@
     }).join(""));
   }
 
+  /* ================= COINS (data/coins.js) ================= */
+  var CN = D.coins;
+  function cnTime(iso, noTime) {
+    var t = Date.parse(iso); if (isNaN(t)) return "";
+    var d = new Date(t + 7 * 3600e3), m = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
+    var p2 = function (n) { return (n < 10 ? "0" : "") + n; };
+    return d.getUTCDate() + " " + m[d.getUTCMonth()] + " " + d.getUTCFullYear() + (noTime ? "" : " " + p2(d.getUTCHours()) + ":" + p2(d.getUTCMinutes()) + " น.");
+  }
+  function cnState(p, now) {
+    var s = p.start ? Date.parse(p.start) : -Infinity, e = p.end ? Date.parse(p.end) : Infinity;
+    return now > e ? "ended" : now < s ? "soon" : "active";
+  }
+  var CN_KIND = { sale: "🔥", bonus: "➕", starter: "⭐", free: "🎁" };
+  var CN_NOW = Date.now();
+  /* landing-page notice: only when an active promo has highlight:true */
+  if (CN && has("coinNotice")) {
+    var hp = (CN.promos || []).filter(function (p) { return p.highlight && cnState(p, CN_NOW) === "active"; });
+    if (hp.length) {
+      var n = document.getElementById("coinNotice");
+      n.innerHTML = '<span class="cnn-ic" aria-hidden="true">' + (CN_KIND[hp[0].kind] || "🪙") + '</span><span class="cnn-tx"><b>' + esc(hp[0].title) + "</b><small>" +
+        (hp[0].end ? "ถึง " + esc(cnTime(hp[0].end)) : "โปรเหรียญตอนนี้") + (hp.length > 1 ? " · และอีก " + (hp.length - 1) + " โปร" : "") + '</small></span><span class="cnn-go" aria-hidden="true">→</span>';
+      n.hidden = false;
+    }
+  }
+  if (CN && has("coinPanel")) {
+    var PFL = {}; CN.platforms.forEach(function (p) { PFL[p.id] = p.label; });
+    var nf = function (x) { return Number(x).toLocaleString("en-US"); };
+    var bf = function (x) { return Number(x).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }); };
+    html("coinChecked", "เช็กราคาเมื่อ <b>" + esc(cnTime(CN.checkedAt)) + "</b>");
+    /* promos */
+    var act = [], ended = [];
+    (CN.promos || []).forEach(function (p) { var s = cnState(p, CN_NOW); (s === "ended" ? ended : act).push({ p: p, s: s }); });
+    var saleOn = act.some(function (x) { return x.p.kind === "sale" && x.s === "active"; });
+    var tags = function (p) { return (p.platforms || []).map(function (id) { return '<span class="cn-tag">' + esc(PFL[id] || id) + "</span>"; }).join(""); };
+    html("coinSale", saleOn ? "" : '<div class="cn-nosale glass"><span aria-hidden="true">🏷️</span><div><b>ตอนนี้ยังไม่มีโปรลดราคาเหรียญ</b><p>' + esc(CN.noSaleNote || "") + "</p></div></div>");
+    act.sort(function (a, b) { return (b.p.kind === "sale") - (a.p.kind === "sale"); });
+    html("coinPromos", act.map(function (x) {
+      var p = x.p;
+      return '<div class="cn-promo glass k-' + esc(p.kind) + (x.s === "soon" ? " soon" : "") + '"><div class="cp-top"><span class="cp-ic" aria-hidden="true">' + (CN_KIND[p.kind] || "🪙") + "</span><h3>" + esc(p.title) + "</h3></div><p>" + esc(p.detail) + '</p><div class="cp-foot">' + tags(p) +
+        (x.s === "soon" ? '<span class="cp-when">เริ่ม ' + esc(cnTime(p.start)) + "</span>" : p.end ? '<span class="cp-when">ถึง ' + esc(cnTime(p.end)) + "</span>" : "") +
+        (p.url ? '<a href="' + esc(p.url) + '" target="_blank" rel="noopener">ไปที่ร้าน ↗</a>' : "") + "</div></div>";
+    }).join(""));
+    ended.sort(function (a, b) { return Date.parse(b.p.end) - Date.parse(a.p.end); });
+    html("coinHistN", "(" + ended.length + ")");
+    html("coinHist", ended.map(function (x) {
+      return "<li><b>" + esc(x.p.title) + "</b><span>" + esc(cnTime(x.p.start)) + " – " + esc(cnTime(x.p.end)) + "</span>" + (x.p.detail ? "<small>" + esc(x.p.detail) + "</small>" : "") + "</li>";
+    }).join(""));
+    if (!ended.length) document.getElementById("coinHistWrap").hidden = true;
+    /* price tabs */
+    var cs = { pf: CN.platforms[0].id, sort: "price" };
+    var mh = /[#&]pf=(\w+)/.exec(location.hash); if (mh && PFL[mh[1]]) cs.pf = mh[1];
+    var SORTS = [["price", "ราคาถูกก่อน"], ["value", "คุ้มก่อน"], ["coins", "เหรียญเยอะก่อน"]];
+    html("coinTabs", CN.platforms.map(function (p) {
+      return '<button type="button" role="tab" class="cn-tab" data-pf="' + esc(p.id) + '"><span aria-hidden="true">' + p.icon + "</span>" + esc(p.label) + "</button>";
+    }).join(""));
+    var renderCn = function () {
+      $$(".cn-tab").forEach(function (b) { var on = b.getAttribute("data-pf") === cs.pf; b.setAttribute("aria-selected", String(on)); b.tabIndex = on ? 0 : -1; });
+      var P = CN.platforms.filter(function (p) { return p.id === cs.pf; })[0];
+      var all = [];
+      P.stores.forEach(function (s) { s.packs.forEach(function (k) { var t = k.paid + k.free + k.bonus; k._t = t; k._v = k.price / t * 100; k._vp = k.price / k.paid * 100; all.push(k); }); });
+      var best = all.reduce(function (a, k) { return !a || k._v < a._v ? k : a; }, null);
+      var out = '<p class="cn-pflock">🔒 ' + esc(P.lock) + "</p>" +
+        '<div class="cn-sort" role="group" aria-label="เรียงลำดับ"><span>เรียง</span>' + SORTS.map(function (s) { return '<button type="button" class="cn-sbtn" data-s="' + s[0] + '" aria-pressed="' + (cs.sort === s[0]) + '">' + s[1] + "</button>"; }).join("") + "</div>";
+      P.stores.forEach(function (s) {
+        var other = P.stores.filter(function (o) { return o !== s; });
+        var list = s.packs.slice().sort(function (a, b) { return cs.sort === "value" ? a._v - b._v : cs.sort === "coins" ? b._t - a._t : a.price - b.price; });
+        out += '<div class="cn-store"><div class="cs-head"><h3>' + esc(s.label) + '</h3><a href="' + esc(s.url) + '" target="_blank" rel="noopener">เปิดร้าน ↗</a></div>' + (s.note ? '<p class="cs-note">' + esc(s.note) + "</p>" : "") +
+          '<div class="cn-head-row" aria-hidden="true"><span>เหรียญ</span><span>ราคา</span><span>฿ / 100</span></div><ul class="cn-list">' + list.map(function (k) {
+            var cmp = "";
+            if (s.web) other.forEach(function (o) {
+              var m = o.packs.filter(function (q) { return q.price === k.price && q.paid === k.paid; })[0];
+              if (m && m.paid + m.free + m.bonus < k._t) cmp = '<span class="cn-cmp">' + esc(o.label.split(" (")[0]) + " ได้ " + nf(m.paid + m.free + m.bonus) + " (เว็บได้เพิ่ม +" + nf(k._t - (m.paid + m.free + m.bonus)) + ")</span>";
+            });
+            var parts = "จ่าย " + nf(k.paid) + (k.free ? " + ฟรี " + nf(k.free) : "") + (k.bonus ? " + โบนัส " + nf(k.bonus) : "");
+            var row = '<div class="cn-c"><b>' + nf(k._t) + "</b><small>" + parts + "</small>" + cmp + '</div><div class="cn-p">฿' + nf(k.price) + '</div><div class="cn-v"><b>' + bf(k._v) + "</b><small>จ่ายเงิน " + bf(k._vp) + "</small></div>";
+            return '<li class="cn-row' + (k === best ? " best" : "") + '">' + (k === best ? '<span class="cn-best">คุ้มสุด</span>' : "") + (k.url ? '<a href="' + esc(k.url) + '" target="_blank" rel="noopener" aria-label="' + nf(k._t) + " เหรียญ ฿" + nf(k.price) + ' (เปิดร้าน)">' + row + "</a>" : row) + "</li>";
+          }).join("") + "</ul></div>";
+      });
+      if (P.extraNote) out += '<p class="cs-note">ℹ️ ' + esc(P.extraNote) + "</p>";
+      if (P.oneTime && P.oneTime.length) out += '<div class="cn-one"><h3>⭐ แพ็กซื้อได้ครั้งเดียว <small>(ไม่นำมาคิดความคุ้ม)</small></h3><ul>' + P.oneTime.map(function (o) {
+        return "<li><div><b>" + esc(o.name) + "</b><small>" + esc([o.store, o.paid ? "เหรียญจ่ายเงิน " + nf(o.paid) : "", o.items, o.limit, o.note].filter(Boolean).join(" · ")) + '</small></div><span class="cn-p">฿' + nf(o.price) + "</span></li>";
+      }).join("") + "</ul></div>";
+      out += '<p class="cn-fine">฿ / 100 เหรียญ = ราคา ÷ เหรียญทั้งหมด (จ่ายเงิน + ฟรี + โบนัส) × 100 · “จ่ายเงิน” = คิดเฉพาะเหรียญจ่ายเงิน เพราะบางรายการในเกมใช้ได้เฉพาะเหรียญจ่ายเงิน</p>';
+      html("coinPanel", out);
+    };
+    renderCn();
+    $("#coinTabs").addEventListener("click", function (e) { var b = e.target.closest(".cn-tab"); if (!b) return; cs.pf = b.getAttribute("data-pf"); renderCn(); try { history.replaceState(null, "", "#pf=" + cs.pf); } catch (er) {} });
+    $("#coinTabs").addEventListener("keydown", function (e) {
+      if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+      var ids = CN.platforms.map(function (p) { return p.id; }), i = ids.indexOf(cs.pf);
+      cs.pf = ids[(i + (e.key === "ArrowRight" ? 1 : ids.length - 1)) % ids.length]; renderCn(); $('.cn-tab[data-pf="' + cs.pf + '"]').focus();
+    });
+    $("#coinPanel").addEventListener("click", function (e) { var b = e.target.closest(".cn-sbtn"); if (!b) return; cs.sort = b.getAttribute("data-s"); renderCn(); });
+    html("coinSources", (CN.sources || []).map(function (s) { return '<li><a href="' + esc(s.url) + '" target="_blank" rel="noopener">' + esc(s.name) + " ↗</a></li>"; }).join(""));
+  }
+
   /* ---------- swipe hints for mobile carousels ---------- */
   $$(".snap").forEach(function (el) {
     if (!el.children.length) return;
