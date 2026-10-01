@@ -529,3 +529,52 @@ body.rp-open{overflow:hidden}
 }
 @keyframes rpUp{from{transform:translateY(100%)}to{transform:none}}
 @media (prefers-reduced-motion:reduce){.rp-panel{animation:none}.rp-fab,.rp-tab-glider,.rp-toast{transition:none}}
+
+/* --- patch: Thai stick chips + PS5 button glossary --- */
+.k.stick{width:auto;min-width:0;padding:0 9px 0 7px;gap:5px;grid-auto-flow:column;font-family:inherit;font-weight:600;font-size:.8rem;white-space:nowrap;border-radius:13px;color:#e8f0ff;
+  background:radial-gradient(circle at 50% 30%,#24407f,#0d1a40)}
+.k.stick::before{content:"";width:10px;height:10px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#9fb8ff,#3a5bb8);box-shadow:0 0 0 2px rgba(159,184,255,.25)}
+.ctrl td.keys{white-space:normal;min-width:200px}
+.ctrl td.keys .v{line-height:2}
+.hc-list li b{line-height:1.9}
+.glossary{margin:0 0 30px;padding:20px 22px;border-radius:var(--r)}
+.gl-head h3{margin:0 0 4px;font-size:1.2rem}
+.gl-head p{margin:0 0 14px;color:var(--muted);font-size:.9rem}
+.gl-body{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:22px;align-items:start}
+.gl-pad{margin:0;padding:6px;border-radius:16px;background:rgba(5,12,32,.45);border:1px solid rgba(150,180,255,.12)}
+.gl-pad svg{display:block;width:100%;height:auto}
+.pd-body{fill:url(#padG);stroke:rgba(170,195,255,.45);stroke-width:2}
+.pd-pad{fill:#1a2c62;stroke:rgba(170,195,255,.35);stroke-width:1.5}
+.pd-trg{fill:#1b2d63;stroke:#e8ff1a;stroke-width:1.5}
+.pd-bmp{fill:#24397a;stroke:rgba(170,195,255,.6);stroke-width:1.2}
+.pd-btn,.pd-btn rect{fill:#0d1a40;stroke:rgba(170,195,255,.55);stroke-width:1.2}
+.pd-face circle{fill:#0b1638;stroke:rgba(170,195,255,.5);stroke-width:1.2}
+.pf{font-size:17px;font-weight:700;text-anchor:middle}
+.pf.x{fill:#8ec1ff}.pf.o{fill:#ff7f8c}.pf.s{fill:#ffa6e6}.pf.t{fill:#4ff0c0}
+.pd-stk{fill:#0b1638;stroke:#e8ff1a;stroke-width:2}
+.pd-stk2{fill:#22356f;stroke:rgba(170,195,255,.5)}
+.pd-lbl line{stroke:rgba(232,255,26,.7);stroke-width:1.4}
+.pd-lbl text{fill:#eef3ff;font-size:20px;font-weight:600;text-anchor:middle;font-family:inherit}
+.pd-lbl text.end{text-anchor:end}.pd-lbl text.st{text-anchor:start}
+.gl-list{display:grid;gap:6px}
+.gl-row{display:grid;grid-template-columns:118px minmax(0,1fr) 140px;gap:10px;align-items:center;padding:8px 10px;border-radius:12px;background:rgba(5,12,32,.42);border:1px solid rgba(150,180,255,.09)}
+.gl-row.gl-th{background:none;border:0;padding:0 10px 2px;font-size:.74rem;color:#8fa3d6;font-family:var(--font-h)}
+.gl-key{display:flex;flex-wrap:wrap;gap:2px;align-items:center;font-weight:600;font-size:.86rem}
+.gl-desc b{display:block;font-weight:600;font-size:.9rem;color:#fff}
+.gl-desc small{display:block;color:var(--muted);font-size:.8rem;line-height:1.45}
+.gl-xb{font-size:.8rem;color:#cfdaf6;display:flex;flex-wrap:wrap;gap:2px;align-items:center}
+.gl-note{margin:12px 0 0;font-size:.84rem;color:#cfdaf6}
+@media (max-width:900px){.gl-body{grid-template-columns:1fr}.gl-pad{max-width:520px;margin:0 auto;width:100%}}
+@media (max-width:760px){
+  .glossary{padding:16px 14px;margin-bottom:24px}
+  .gl-row{grid-template-columns:auto minmax(0,1fr);gap:3px 10px;padding:9px 11px}
+  .gl-row .gl-key{grid-column:1;grid-row:1}
+  .gl-row .gl-desc{display:contents}
+  .gl-row .gl-desc b{grid-column:2;grid-row:1;align-self:center;font-size:.86rem;line-height:1.3}
+  .gl-row .gl-desc small{grid-column:1/-1;grid-row:2;font-size:.78rem}
+  .gl-row .gl-xb{grid-column:1/-1;grid-row:3;justify-content:flex-start;font-size:.78rem;padding-top:3px;border-top:1px dashed rgba(150,180,255,.14)}
+  .gl-row .gl-xb::before{content:"Xbox:";font-size:.7rem;color:#8fa3d6;margin-right:4px}
+  .gl-row.gl-th{display:none}
+  .ctrl td.keys{min-width:0}
+}
+.pd-lbl text.sub{fill:#e8ff1a;font-size:18px}

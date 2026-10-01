@@ -12,10 +12,12 @@
   var KEYS = {
     X: '<i class="k ps-x" title="Cross">✕</i>', O: '<i class="k ps-o" title="Circle">○</i>',
     T: '<i class="k ps-t" title="Triangle">△</i>', S: '<i class="k ps-s" title="Square">□</i>',
-    A: '<i class="k xb-a">A</i>', B: '<i class="k xb-b">B</i>', Y: '<i class="k xb-y">Y</i>', XX: '<i class="k xb-x">X</i>'
+    A: '<i class="k xb-a">A</i>', B: '<i class="k xb-b">B</i>', Y: '<i class="k xb-y">Y</i>', XX: '<i class="k xb-x">X</i>',
+    "อนาล็อกซ้าย": '<i class="k stick" title="ก้านโยกซ้าย (Left Stick)">อนาล็อกซ้าย</i>',
+    "อนาล็อกขวา": '<i class="k stick" title="ก้านโยกขวา (Right Stick)">อนาล็อกขวา</i>'
   };
   function kbd(str) {
-    return esc(str).replace(/\[([A-Z0-9]+)\]/g, function (m, t) {
+    return esc(str).replace(/\[([A-Z0-9]+|อนาล็อกซ้าย|อนาล็อกขวา)\]/g, function (m, t) {
       if (KEYS[t]) return KEYS[t];
       return '<i class="k sh">' + t + "</i>";
     });
@@ -59,6 +61,17 @@
   html("tblDefence", ctrlTable(D.consoleControls.defence));
   html("tblGK", ctrlTable(D.consoleControls.gk));
   html("consoleFoot", "ℹ️ " + kbd(D.consoleControls.footnote));
+  /* ---------- รู้จักปุ่มจอย PS5 ---------- */
+  if (D.buttonGlossary) {
+    var BG = D.buttonGlossary;
+    html("glossIntro", esc(BG.intro));
+    html("glossRows", '<div class="gl-row gl-th"><span>ปุ่ม (PS5)</span><span>ชื่อเรียก · อยู่ตรงไหน</span><span>Xbox</span></div>' +
+      BG.rows.map(function (r) {
+        return '<div class="gl-row"><span class="gl-key">' + kbd(r.key) + '</span><span class="gl-desc"><b>' + esc(r.name) + "</b><small>" + esc(r.where) +
+          '</small></span><span class="gl-xb">' + kbd(r.xb) + "</span></div>";
+      }).join(""));
+    html("glossNote", "💡 " + esc(BG.note));
+  }
 
   /* ---------- 3) MOBILE ---------- */
   function scheme(s, cls, icon) {
