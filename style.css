@@ -531,9 +531,6 @@ body.rp-open{overflow:hidden}
 @media (prefers-reduced-motion:reduce){.rp-panel{animation:none}.rp-fab,.rp-tab-glider,.rp-toast{transition:none}}
 
 /* --- patch: Thai stick chips + PS5 button glossary --- */
-.k.stick{width:auto;min-width:0;padding:0 9px 0 7px;gap:5px;grid-auto-flow:column;font-family:inherit;font-weight:600;font-size:.8rem;white-space:nowrap;border-radius:13px;color:#e8f0ff;
-  background:radial-gradient(circle at 50% 30%,#24407f,#0d1a40)}
-.k.stick::before{content:"";width:10px;height:10px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#9fb8ff,#3a5bb8);box-shadow:0 0 0 2px rgba(159,184,255,.25)}
 .ctrl td.keys{white-space:normal;min-width:200px}
 .ctrl td.keys .v{line-height:2}
 .hc-list li b{line-height:1.9}
@@ -578,3 +575,38 @@ body.rp-open{overflow:hidden}
   .ctrl td.keys{min-width:0}
 }
 .pd-lbl text.sub{fill:#e8ff1a;font-size:18px}
+
+/* --- patch: analog-stick icon chips (LS/RS/L3/R3) + glossary use lines --- */
+.k.stk{width:auto;min-width:0;height:26px;padding:0 7px 0 3px;display:inline-flex;align-items:center;gap:3px;border-radius:13px;white-space:nowrap;
+  background:radial-gradient(circle at 50% 30%,#24407f,#0d1a40)}
+.k.stk .st-ic{width:20px;height:20px;flex:none;display:block;overflow:visible}
+.k.stk b{font-weight:700;font-size:.74rem;letter-spacing:.3px;color:#eef3ff;line-height:1}
+.st-base{fill:#081233;stroke:#e8ff1a;stroke-width:1.3}
+.st-cap{fill:#2c4a96;stroke:#9fb8ff;stroke-width:.9}
+.st-grip{fill:none;stroke:rgba(255,255,255,.35);stroke-width:.8;stroke-dasharray:1.2 1.2}
+.st-arr{fill:#e8ff1a}
+.st-press{fill:none;stroke:#e8ff1a;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.k.stk.press .st-cap{fill:#1d3577}
+.hc-stick{margin:10px 0 0;font-size:.8rem;line-height:1.9;color:#cfdaf6}
+.hc-stick a{color:var(--neon);white-space:nowrap}
+.gl-sticks{margin:0 0 16px;padding:12px 14px;border-radius:14px;background:linear-gradient(135deg,rgba(232,255,26,.12),rgba(59,123,255,.10));border:1px solid rgba(232,255,26,.45);box-shadow:inset 0 0 0 1px rgba(232,255,26,.08)}
+.gs-items{display:grid;grid-template-columns:1fr 1fr;gap:8px 18px}
+.gs-item{display:flex;align-items:center;gap:8px;font-weight:600;font-size:.92rem;color:#fff;line-height:1.45}
+.gs-ic{flex:none}
+.gs-ic .k.stk{height:32px;padding:0 9px 0 4px;border-radius:16px}
+.gs-ic .k.stk .st-ic{width:26px;height:26px}
+.gs-ic .k.stk b{font-size:.86rem}
+.gs-note{margin:10px 0 0;font-size:.86rem;color:#ffe9a8}
+.gs-ex{margin:6px 0 0;font-size:.86rem;color:#e3eaff;line-height:2}
+.gl-use{display:block;margin-top:5px;padding:5px 8px;border-radius:8px;font-style:normal;font-size:.8rem;line-height:1.85;color:#f2f6ff;background:rgba(232,255,26,.08);border-left:3px solid var(--neon)}
+.gl-use>span{color:var(--neon);font-weight:700;margin-right:2px}
+.gl-use .k{height:22px;min-width:22px;font-size:.72rem;margin:0 1px}
+.gl-use .k.ps-x,.gl-use .k.ps-o,.gl-use .k.ps-t,.gl-use .k.ps-s{width:22px;font-size:.9rem}
+.gl-use .k.stk .st-ic{width:17px;height:17px}
+@media (max-width:760px){
+  .gs-items{grid-template-columns:1fr}
+  .gs-item{font-size:.88rem}
+  .gl-row .gl-desc .gl-use{grid-column:1/-1;grid-row:3}
+  .gl-row .gl-xb{grid-row:4}
+}
+@media (min-width:901px){.gl-pad{position:sticky;top:calc(var(--nav-h) + 14px)}}

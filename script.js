@@ -13,11 +13,23 @@
     X: '<i class="k ps-x" title="Cross">✕</i>', O: '<i class="k ps-o" title="Circle">○</i>',
     T: '<i class="k ps-t" title="Triangle">△</i>', S: '<i class="k ps-s" title="Square">□</i>',
     A: '<i class="k xb-a">A</i>', B: '<i class="k xb-b">B</i>', Y: '<i class="k xb-y">Y</i>', XX: '<i class="k xb-x">X</i>',
-    "อนาล็อกซ้าย": '<i class="k stick" title="ก้านโยกซ้าย (Left Stick)">อนาล็อกซ้าย</i>',
-    "อนาล็อกขวา": '<i class="k stick" title="ก้านโยกขวา (Right Stick)">อนาล็อกขวา</i>'
+    LS: stickChip("LS", "LS = Left Stick ก้านอนาล็อกซ้าย (บนจอยไม่มีตัวหนังสือ LS)", false),
+    RS: stickChip("RS", "RS = Right Stick ก้านอนาล็อกขวา (บนจอยไม่มีตัวหนังสือ RS)", false),
+    L3: stickChip("L3", "L3 = กดก้านอนาล็อกซ้ายลง", true),
+    R3: stickChip("R3", "R3 = กดก้านอนาล็อกขวาลง", true)
   };
+  /* analog stick seen from above: base ring + thumb cap; tilt arrows, or a press-down marker for L3/R3 */
+  function stickChip(label, title, press) {
+    var marks = press
+      ? '<path class="st-press" d="M12 5.2v4.6M9.9 8l2.1 2.2L14.1 8"/>'
+      : '<path class="st-arr" d="M12 .9l1.6 1.9h-3.2zM12 23.1l1.6-1.9h-3.2zM.9 12l1.9-1.6v3.2zM23.1 12l-1.9-1.6v3.2z"/>';
+    return '<i class="k stk' + (press ? ' press' : '') + '" title="' + title + '" aria-label="' + title + '">' +
+      '<svg class="st-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+      '<circle class="st-base" cx="12" cy="12" r="8.6"/><circle class="st-cap" cx="12" cy="12" r="5.6"/>' +
+      '<circle class="st-grip" cx="12" cy="12" r="3.4"/>' + marks + '</svg><b>' + label + '</b></i>';
+  }
   function kbd(str) {
-    return esc(str).replace(/\[([A-Z0-9]+|อนาล็อกซ้าย|อนาล็อกขวา)\]/g, function (m, t) {
+    return esc(str).replace(/\[([A-Z0-9]+)\]/g, function (m, t) {
       if (KEYS[t]) return KEYS[t];
       return '<i class="k sh">' + t + "</i>";
     });
@@ -65,10 +77,15 @@
   if (D.buttonGlossary) {
     var BG = D.buttonGlossary;
     html("glossIntro", esc(BG.intro));
+    html("glossSticks", '<div class="gs-items">' + BG.sticks.map(function (x) {
+        return '<div class="gs-item"><span class="gs-ic">' + kbd(x.key) + "</span><span>" + esc(x.text) + "</span></div>";
+      }).join("") + '</div><p class="gs-note">⚠️ ' + esc(BG.sticksNote) + '</p><p class="gs-ex">' + kbd(BG.example) + "</p>");
+    html("heroStick", 'ℹ️ ' + kbd("[LS]") + " = ก้านอนาล็อกซ้าย (บังคับนักเตะ) · " + kbd("[RS]") + ' = ก้านอนาล็อกขวา (เลี้ยงหลอก/สลับตัว) — บนจอยไม่มีตัวหนังสือ LS/RS · กดก้านลง = L3/R3 · <a href="#btnGlossary">ดู “รู้จักปุ่มจอย PS5”</a>');
     html("glossRows", '<div class="gl-row gl-th"><span>ปุ่ม (PS5)</span><span>ชื่อเรียก · อยู่ตรงไหน</span><span>Xbox</span></div>' +
       BG.rows.map(function (r) {
         return '<div class="gl-row"><span class="gl-key">' + kbd(r.key) + '</span><span class="gl-desc"><b>' + esc(r.name) + "</b><small>" + esc(r.where) +
-          '</small></span><span class="gl-xb">' + kbd(r.xb) + "</span></div>";
+          "</small>" + (r.use ? '<em class="gl-use"><span>ใช้ในเกม:</span> ' + kbd(r.use) + "</em>" : "") +
+          '</span><span class="gl-xb">' + kbd(r.xb) + "</span></div>";
       }).join(""));
     html("glossNote", "💡 " + esc(BG.note));
   }
