@@ -9,12 +9,33 @@
 var EPM = window.EPM = window.EPM || {};
 
 EPM.meta = {
-  lastUpdated: "2026-10-02",
-  weekLabel: "อัปเดตรายวัน · 2 ต.ค. 2026 (หลังเมนเต 1 ต.ค.)",
+  lastUpdated: "2026-10-03",
+  weekLabel: "อัปเดตรายวัน · 3 ต.ค. 2026",
   nextVersion: "v6.1.0 — Konami ประกาศว่าจะมาในเดือน ต.ค. 2026 (ยังไม่ระบุวัน)"
 };
 
 EPM.news = [
+  {
+    date: "2026-10-02",
+    tag: "ประกาศ",
+    hot: true,
+    title: "POTM Brasileirão Betano เปลี่ยนวันจบ — จบในเมนเต 8 ต.ค.",
+    body: "Konami ประกาศเปลี่ยนวันสิ้นสุด Special Player List “POTM: Brasileirão Betano” ด้วยเหตุผลหลายประการ — จะสิ้นสุดในเมนเตประจำวันพฤหัสที่ 8 ต.ค. 2026 (ตรวจ Notices ในเกมก่อนแลก/ใช้สิทธิ์) — วันเดียวกันยังมีอัปเดตการ์ด Messi (Show Time Welcome) ตามประกาศก่อนหน้า",
+    sources: [
+      { name: "KONAMI ทางการ (EN)", url: "https://www.konami.com/efootball/en-us/topic/news/5918" },
+      { name: "KONAMI ทางการ (JP)", url: "https://www.konami.com/efootball/ja/topic/news/5918" }
+    ]
+  },
+  {
+    date: "2026-10-02",
+    tag: "พันธมิตร",
+    title: "Konami ต่อสัญญาพันธมิตรระยะยาวกับสหพันธ์ฟุตบอลฝรั่งเศส (FFF)",
+    body: "Konami Digital Entertainment ประกาศขยายความร่วมมือระยะยาวกับ French Football Federation — ยังเป็น Official Football Video Game Partner ของทีมชาติฝรั่งเศส ใช้สิทธิ์แบรนด์/ภาพลักษณ์ และร่วมอีสปอร์ตกับสมาคมชาติที่ได้รับสิทธิ์อื่น — ไม่กระทบคอนเทนต์ในเกมทันที แต่ยืนยันว่าทีมชาติฝรั่งเศสยังอยู่ในระบบลิขสิทธิ์ของ eFootball",
+    sources: [
+      { name: "KONAMI Press (ทางการ)", url: "https://www.konami.com/games/eu/en/topics/19345/" },
+      { name: "Inside World Football (สรุป)", url: "https://www.insideworldfootball.com/2026/10/02/konami-renew-france-partnership-for-efootball-gaming-title/" }
+    ]
+  },
   {
     date: "2026-10-01",
     tag: "แพ็ก Epic",
