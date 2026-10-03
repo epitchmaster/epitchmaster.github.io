@@ -9,12 +9,26 @@
 var EPM = window.EPM = window.EPM || {};
 
 EPM.meta = {
-  lastUpdated: "2026-10-03",
-  weekLabel: "อัปเดตรายวัน · 3 ต.ค. 2026",
+  lastUpdated: "2026-10-04",
+  weekLabel: "อัปเดตรายวัน · 4 ต.ค. 2026",
   nextVersion: "v6.1.0 — Konami ประกาศว่าจะมาในเดือน ต.ค. 2026 (ยังไม่ระบุวัน)"
 };
 
 EPM.news = [
+  {
+    date: "2026-10-03",
+    tag: "พรีวิวแพ็ก",
+    hot: true,
+    title: "พรีวิว Epic จันทร์ 5 ต.ค. — Spanish League Midfielders: Kaká / Davids / Guti",
+    body: "สื่อ GameMarket รายงานว่า Special Player List “Spanish League Selection Midfielders” มีกำหนดเปิดวันจันทร์ 5 ต.ค. 2026 — Epic 3 คนอยู่ในแนวกลางเดียวกัน: Kaká (AMF · Hole Player · Real Madrid เบส 88), Edgar Davids (DMF · The Destroyer · Barcelona เบส 87), Guti (CMF · Orchestrator · Real Madrid เบส 86) พร้อมนักเตะลีกสเปนปัจจุบัน — ยังเป็นพรีวิวก่อนเปิดในเกม สกิล/เลเวลสูงสุดให้ตรวจในเกมวันเปิด — เหมาะกับแผนที่มีกองกลางกลาง 3 คน / ถ้าเล่นแค่ 2 คนกลางอาจไม่คุ้มกล่องเต็ม (ประมาณ 13,500 เหรียญถ้าเป็นกล่อง 150 ใบแบบมาตรฐาน)",
+    sources: [
+      { name: "GameMarket (พรีวิว 3 ต.ค.)", url: "https://gamemarket.gg/news/efootball/efootball-spanish-league-midfielders-epic-kak-davids-guti-preview" },
+      {
+        name: "GamingonPhone (ใบ้ Epic จันทร์หน้า 1 ต.ค.)",
+        url: "https://gamingonphone.com/news/efootball-2027-october-2026-maintenance-update-netherlands-epic-pack-new-managers-account-bans-and-more/"
+      }
+    ]
+  },
   {
     date: "2026-10-02",
     tag: "ประกาศ",
